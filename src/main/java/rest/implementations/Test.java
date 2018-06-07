@@ -24,9 +24,4 @@ public class Test {
     public static void addUser () {
 
     }
-
-    public static void main(String[] args) {
-        User user = getUser();
-        System.out.println(user.getId()+" "+user.getFirstname()+" "+user.getCustomer().getPhonenumber());
-    }
 }
