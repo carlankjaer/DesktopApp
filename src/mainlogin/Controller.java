@@ -18,6 +18,7 @@ public class Controller {
     public TextField userID;
     public PasswordField passwordID;
 
+
     public void loginFunction (ActionEvent event)
     {
         if (userID.getText().equals(userAdmin[0]) && passwordID.getText().equals(userAdmin[1])) {
@@ -25,7 +26,8 @@ public class Controller {
             try
             {
 
-                root = FXMLLoader.load(getClass().getClassLoader().getResource("creditguiadmin/creditGUI.fxml"));
+                root = FXMLLoader.load(getClass().getClassLoader().
+                        getResource("creditguiadmin/creditGUI.fxml"));
                 Stage home = new Stage();
                 home.setTitle("Credit GUI");
                 home.setScene(new Scene(root, 1031.0, 800.0));

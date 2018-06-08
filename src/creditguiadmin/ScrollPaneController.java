@@ -2,12 +2,12 @@ package creditguiadmin;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -15,9 +15,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 //import rest.DTO.Category;
 //import rest.DTO.Product;
-import rest.implementations.AuthenticationClientImpl;
-import rest.interfaces.AuthenticationClient;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.*;
 
@@ -53,27 +52,113 @@ public class ScrollPaneController implements Initializable {
     public Button refundAllProducts;
     public TextField deleteCustomerID;
     public TextField deleteCustomerName;
+    public TableColumn productIdInPrductTable;
+    public TableColumn productCategoryInTable;
+    public TableColumn productNameInTable;
+    public TableColumn productPriseInTable;
+    public TextField searchForProduct;
+    public TableView productListTable;
+    public ChoiceBox choosePrduct;
+    public Button getProductSearch;
+    public Button cancleList;
 
-    Product product1 = new Product(1, "kqly1");
-    Product product2 = new Product(2, "kqly2");
-    Product product3 = new Product(3, "kqly3");
-    Product product4 = new Product(4, "kqly4");
+    Product product1 = new Product(1, "Bananer");
+    Product product2 = new Product(2, "Aebler");
+    Product product3 = new Product(3, "Citroner");
+    Product product4 = new Product(4, "Appelsiner");
     List<Product> productArrayList1 = Arrays.asList(product1, product2);
     List<Product> productArrayList2 = Arrays.asList(product3, product4);
     Category category1 = new Category("venstre",productArrayList1);
     Category category2 = new Category("hoejre", productArrayList2);
     List<Category> categories = Arrays.asList(category1, category2);
+    ObservableList<Product> obsTableList = FXCollections.observableArrayList(productList);
+    private List<Product> allProducts = new ArrayList<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("test");
+
+
+
+        for (Category cat : categories) {
+            for (Product p : cat.getProductArrayList()) {
+                allProducts.add(p);
+                obsTableList.add(p);
+            }
+        }
+        productListTable.setEditable(true);
+
+    productListTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+
+            System.out.println(event.getClickCount());
+            Node node = event.getPickResult().getIntersectedNode();
+            Product product = null;
+            try{
+                product = (Product) ((TableCell) node).getTableRow().getItem();
+            }catch (Exception e){
+                product = (Product) ((TableCell)node.getParent()).getTableRow().getItem();
+           }
+
+           if(product != null)addToProductList(product);
+
+        }
+    });
+        FilteredList<Product> flProducts = new FilteredList(obsTableList, p -> true);
+        productListTable.setItems(flProducts);
+        productListTable.getColumns().addAll(productNameInTable, productIdInPrductTable, productCategoryInTable);
+
+        productListTable.getColumns();
+        productListTable.setItems(obsTableList);
+        productIdInPrductTable.setCellValueFactory(
+                new PropertyValueFactory<Product, Integer>("id"));
+
+        productNameInTable.setCellValueFactory(
+                new PropertyValueFactory<Product, String>("name"));
+
+        productCategoryInTable.setCellValueFactory(
+                new PropertyValueFactory<Category, String>("name"));
+
+
+        choosePrduct.getItems().addAll("name", "id");
+        choosePrduct.setValue("name");
+
+        searchForProduct.setPromptText("Soe nu!");
+        searchForProduct.setOnKeyReleased(keyEvent -> {
+            final String name = "name";
+            obsTableList.setAll(allProducts);
+            if (choosePrduct.getValue().equals(name)) {
+                obsTableList.removeIf(p -> !p.getName().toLowerCase().contains(searchForProduct.getText().toLowerCase().trim()));
+            }
+            else if (choosePrduct.getValue().equals("id"))
+            {
+                obsTableList.removeIf(p -> !Integer.toString(p.getId()).contains(searchForProduct.getText().toLowerCase().trim()));
+            }
+        });
+
+        choosePrduct.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) ->
+        {//reset table and textfield when new choice is selected
+            if (newVal != null)
+            {
+                searchForProduct.setText("");
+                flProducts.setPredicate(null);//This is same as saying flProduct.setPredicate(p->true);
+            }
+        });
+
+
+
 
     }
 
     public void selectCategories() {
+
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(BUTTON_PADDING));
         grid.setHgap(BUTTON_PADDING);
         grid.setVgap(BUTTON_PADDING);
+
+
 
         scrollPane.setContent(grid);
         int counter = 0;
@@ -92,6 +177,7 @@ public class ScrollPaneController implements Initializable {
             else
                 grid.add(categoryButton, rowCounter, 2);
         }
+
     }
 
     public void choosenCategory (Category category) {
@@ -150,12 +236,29 @@ public class ScrollPaneController implements Initializable {
 
         productTable.setItems(obsProductList);
 
+        cancleList.setOnAction(event -> {
+            obsProductList.clear();
+            productList.clear();
+        });
+
+
     }
 
-    public void searchProducts() {
+    public void removeItemsFromList(){
 
 
 
     }
 
+    public void itemToList(MouseEvent mouseEvent) {
+
+
+
+        ObservableList<Product> obsProductList = FXCollections.observableArrayList(productList);
+
+        productColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
+
+        productTable.setItems(obsProductList);
+
+    }
 }
