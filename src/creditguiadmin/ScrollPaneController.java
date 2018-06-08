@@ -60,8 +60,8 @@ public class ScrollPaneController implements Initializable {
     Product product4 = new Product(4, "kqly4");
     List<Product> productArrayList1 = Arrays.asList(product1, product2);
     List<Product> productArrayList2 = Arrays.asList(product3, product4);
-    Category category1 = new Category("venstre",productArrayList1);
-    Category category2 = new Category("hoejre", productArrayList2);
+    Category category1 = new Category("Venstre",productArrayList1);
+    Category category2 = new Category("Højre", productArrayList2);
     List<Category> categories = Arrays.asList(category1, category2);
 
     @Override
@@ -83,8 +83,8 @@ public class ScrollPaneController implements Initializable {
             Button categoryButton = new Button(category.getName());
             categoryButton.setOnAction(event -> choosenCategory(category));
             categoryButton.setStyle("-fx-font: 22 arial; -fx-base: #b6e7c9;");
-            categoryButton.setMaxSize(300,80);
-            categoryButton.setMinSize(300,80);
+            categoryButton.setMaxSize(298,80);
+            categoryButton.setMinSize(298,80);
             if (counter == 2) {
                 rowCounter++;
                 grid.add(categoryButton, rowCounter, 2);
@@ -101,10 +101,10 @@ public class ScrollPaneController implements Initializable {
         grid.setVgap(BUTTON_PADDING);
 
         Label label2 = new Label("" + category.getName());
-        label2.setFont(Font.font("San Francisco", 30));
+        label2.setFont(Font.font("Ariel", 30));
         label2.setAlignment(Pos.TOP_RIGHT);
         scrollPane.setContent(grid);
-        grid.add(label2, 1 , 1);
+        grid.add(label2, 1 , 0);
 
         int counter = 0;
         int rowCounter = 0;
@@ -116,14 +116,14 @@ public class ScrollPaneController implements Initializable {
             productButton.setOnAction(event -> scrollPane.setContent(new Button()));
 
             productButton.setStyle("-fx-font: 22 arial; -fx-base: #b6e7c9;");
-            productButton.setMaxSize(300,80);
-            productButton.setMinSize(300,80);
+            productButton.setMaxSize(298,80);
+            productButton.setMinSize(298,80);
 
-            Button returnButton = new Button("back to 80's");
+            Button returnButton = new Button("< Back");
 
             returnButton.setOnAction(event -> selectCategories());
 
-            returnButton.setStyle("-fx-font: 10 arial; -fx-base: #f08080;");
+            returnButton.setStyle("-fx-font: 15 arial;");
             returnButton.setMaxSize(150,30);
             returnButton.setMinSize(150,30);
             grid.add(returnButton, 0,0);
@@ -151,11 +151,4 @@ public class ScrollPaneController implements Initializable {
         productTable.setItems(obsProductList);
 
     }
-
-    public void searchProducts() {
-
-
-
-    }
-
 }

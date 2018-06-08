@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="772.0" prefWidth="1031.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="creditguiadmin.ScrollPaneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="772.0" prefWidth="1031.0" stylesheets="@../CSS/UILayoutScheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="creditguiadmin.ScrollPaneController">
     <children>
         <TabPane layoutY="57.0" prefHeight="715.0" prefWidth="1031.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
@@ -24,38 +24,38 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <TextField layoutX="657.0" layoutY="28.0" prefHeight="58.0" prefWidth="360.0" promptText="Kunde Nr.">
+                                <TextField layoutX="657.0" layoutY="28.0" prefHeight="58.0" prefWidth="360.0" promptText="Kunde Nr." AnchorPane.topAnchor="20.0">
                                     <font>
                                         <Font size="28.0" />
                                     </font>
                                 </TextField>
-                                <TextField layoutX="657.0" layoutY="99.0" prefHeight="58.0" prefWidth="360.0" promptText="Kunde Navn">
+                                <TextField layoutX="657.0" layoutY="89.0" prefHeight="58.0" prefWidth="360.0" promptText="Kunde Navn">
                                     <font>
                                         <Font size="28.0" />
                                     </font>
                                 </TextField>
-                                <TableView fx:id="productTable" layoutX="657.0" layoutY="181.0" prefHeight="423.0" prefWidth="352.0">
+                                <TableView fx:id="productTable" layoutX="657.0" layoutY="181.0" prefHeight="402.0" prefWidth="352.0">
                                     <columns>
-                                        <TableColumn fx:id="productColumn" prefWidth="351.0" text="Produkt" />
+                                        <TableColumn fx:id="productColumn" prefWidth="350.0" text="Produkt" />
                                     </columns>
                                 </TableView>
-                                <TableView layoutX="14.0" layoutY="326.0" prefHeight="341.0" prefWidth="619.0">
+                                <TableView layoutX="14.0" layoutY="326.0" prefHeight="320.0" prefWidth="619.0" AnchorPane.bottomAnchor="5.0">
                                     <columns>
                                         <TableColumn prefWidth="107.0" text="Produkt ID" />
                                         <TableColumn prefWidth="102.0" text="Kategori" />
                                         <TableColumn prefWidth="315.0" text="Produkt Navn" />
-                                        <TableColumn prefWidth="94.0" text="Prisen" />
+                                        <TableColumn prefWidth="94.0" text="Pris" />
                                     </columns>
                                 </TableView>
-                                <Button fx:id="payForChosenProducts" layoutX="657.0" layoutY="616.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="354.0" text="Betal">
+                                <Button fx:id="payForChosenProducts" layoutX="657.0" layoutY="590.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="354.0" style="-fx-background-color: #b6e7c9;" text="Betal" AnchorPane.bottomAnchor="5.0">
                                     <font>
                                         <Font size="29.0" />
                                     </font>
                                 </Button>
                                 <TextField layoutX="14.0" layoutY="281.0" prefHeight="38.0" prefWidth="220.0" promptText="Søg Produkt" />
-                                <ScrollPane fx:id="scrollPane" layoutX="6.0" layoutY="4.0" prefHeight="270.0" prefWidth="630.0">
+                                <ScrollPane fx:id="scrollPane" layoutX="6.0" layoutY="4.0" prefHeight="245.0" prefWidth="630.0" AnchorPane.topAnchor="20.0">
                                     <content>
-                                        <Button fx:id="categoriesButton" mnemonicParsing="false" onAction="#selectCategories" prefHeight="268.0" prefWidth="627.0" style="-fx-background-color: #b6e7c9;" text="Categories">
+                                        <Button fx:id="categoriesButton" mnemonicParsing="false" onAction="#selectCategories" prefHeight="243.0" prefWidth="627.0" text="KATEGORIER">
                                             <font>
                                                 <Font name="Arial" size="22.0" />
                                             </font>
@@ -70,18 +70,17 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <TextField fx:id="createCustomerFirstName" layoutX="21.0" layoutY="24.0" prefHeight="51.0" prefWidth="304.0" promptText="FORNAVN" />
+                                <TextField fx:id="createCustomerFirstName" layoutX="21.0" layoutY="24.0" prefHeight="51.0" prefWidth="304.0" promptText="FORNAVN" AnchorPane.topAnchor="20.0" />
                                 <TextField fx:id="createCustomerLastName" layoutX="21.0" layoutY="101.0" prefHeight="51.0" prefWidth="304.0" promptText="EFTERNAVN" />
                                 <TextField fx:id="createCustomerAddress1" layoutX="21.0" layoutY="179.0" prefHeight="51.0" prefWidth="304.0" promptText="ADRESSE 1" />
                                 <TextField fx:id="createCustomerAddress1createCustomerAddress2" layoutX="21.0" layoutY="259.0" prefHeight="51.0" prefWidth="304.0" promptText="ADRESSE 2" />
                                 <TextField fx:id="createCustomerCity" layoutX="21.0" layoutY="341.0" prefHeight="51.0" prefWidth="304.0" promptText="BY" />
                                 <TextField fx:id="createCustomerZipCode" layoutX="21.0" layoutY="413.0" prefHeight="51.0" prefWidth="304.0" promptText="POST NR." />
                                 <TextField fx:id="createCustomerPhoneNumber" layoutX="21.0" layoutY="517.0" prefHeight="51.0" prefWidth="304.0" promptText="TELEFON NR." />
-                                <TextField fx:id="createCustomerEmail" layoutX="21.0" layoutY="596.0" prefHeight="51.0" prefWidth="304.0" promptText="E-MAIL" />
-                                <TextField fx:id="createCustomerID" layoutX="516.0" layoutY="24.0" prefHeight="51.0" prefWidth="397.0" promptText="KUNDE NR." />
-                                <CheckBox layoutX="516.0" layoutY="104.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="397.0" text="KAN GÅ I MINUS" />
-                                <Button fx:id="createCustomerButton" layoutX="516.0" layoutY="593.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="432.0" text="OPRET NYE KUNDE" />
-                                <Label layoutX="516.0" layoutY="75.0" prefHeight="16.0" prefWidth="182.0" text="TELEFON NR. BY DEFAULT " />
+                                <TextField fx:id="createCustomerEmail" layoutX="21.0" layoutY="596.0" prefHeight="51.0" prefWidth="304.0" promptText="E-MAIL" AnchorPane.bottomAnchor="5.0" />
+                                <TextField fx:id="createCustomerID" layoutX="516.0" layoutY="24.0" prefHeight="51.0" prefWidth="397.0" promptText="KUNDE NR." AnchorPane.topAnchor="20.0" />
+                                <Button fx:id="createCustomerButton" layoutX="516.0" layoutY="593.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="432.0" text="OPRET NY KUNDE" AnchorPane.bottomAnchor="5.0" />
+                                <Label layoutX="516.0" layoutY="80.0" prefHeight="16.0" prefWidth="182.0" text="TELEFON NR. BY DEFAULT " />
                             </children>
                         </AnchorPane>
                     </content>
@@ -90,17 +89,20 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <TextField layoutX="23.0" layoutY="40.0" prefHeight="45.0" prefWidth="290.0" promptText="BRUGER ID" />
-                                <TextField layoutX="23.0" layoutY="124.0" prefHeight="45.0" prefWidth="290.0" promptText="BRUGER NAVN" />
-                                <TextField layoutX="23.0" layoutY="243.0" prefHeight="45.0" prefWidth="290.0" promptText="KONTO LIGE NU" />
-                                <Button layoutX="752.0" layoutY="603.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="268.0" text="BETAL OG OVERFOER" />
-                                <TextField layoutX="23.0" layoutY="412.0" prefHeight="51.0" prefWidth="324.0" promptText="BELØB TIL INDBETALING" />
-                                <SplitMenuButton layoutX="23.0" layoutY="518.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="327.0">
+                                <TextField layoutX="23.0" layoutY="40.0" prefHeight="45.0" prefWidth="290.0" promptText="BRUGER ID" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="20.0" />
+                                <TextField layoutX="25.0" layoutY="79.0" prefHeight="45.0" prefWidth="290.0" promptText="BRUGER NAVN" AnchorPane.leftAnchor="25.0" />
+                                <TextField layoutX="27.0" layoutY="198.0" prefHeight="45.0" prefWidth="290.0" promptText="BELØB PÅ KONTO" AnchorPane.leftAnchor="25.0" />
+                                <Button layoutX="23.0" layoutY="582.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="290.0" text="BETAL OG OVERFØR" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="25.0" />
+                                <TextField layoutX="25.0" layoutY="447.0" prefHeight="51.0" prefWidth="290.0" promptText="BELØB TIL INDBETALING" AnchorPane.leftAnchor="25.0" />
+                                <SplitMenuButton layoutX="20.0" layoutY="515.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="290.0" text="Betalings Metode" AnchorPane.leftAnchor="25.0">
                                     <items>
                                         <MenuItem mnemonicParsing="false" text="KONTANT" />
                                         <MenuItem mnemonicParsing="false" text="KORT" />
                                         <MenuItem mnemonicParsing="false" text="MOBILE PAY" />
                                     </items>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
                                 </SplitMenuButton>
                             </children></AnchorPane>
                     </content>
@@ -109,23 +111,21 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <TextField fx:id="createUserID" layoutX="14.0" layoutY="70.0" prefHeight="45.0" prefWidth="254.0" promptText="BRUGER ID" />
-                                <TextField fx:id="createUserPhoneNumber" layoutX="14.0" layoutY="130.0" prefHeight="45.0" prefWidth="254.0" promptText="TELEFON NR." />
-                                <TextField fx:id="createUserName" layoutX="14.0" layoutY="185.0" prefHeight="45.0" prefWidth="254.0" promptText="BRUGERNAVN" />
-                                <CheckBox fx:id="adminRights" layoutX="16.0" layoutY="239.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="260.0" text="ADMIN RETTIGHEDER" />
-                                <Button fx:id="createUserButton" layoutX="6.0" layoutY="277.0" mnemonicParsing="false" prefHeight="76.0" prefWidth="323.0" text="OPRETTE BRUGER" />
-                                <TextField fx:id="refundCustomerID" layoutX="14.0" layoutY="391.0" prefHeight="45.0" prefWidth="254.0" promptText="KUNDE ID" />
-                                <TextField fx:id="refundCustomerName" layoutX="14.0" layoutY="453.0" prefHeight="45.0" prefWidth="254.0" promptText="KUNDE NAVN" />
-                                <TextField fx:id="currentRefundableBalance" layoutX="14.0" layoutY="514.0" prefHeight="45.0" prefWidth="254.0" promptText="BELØB PÅ KONTO" />
-                                <Button fx:id="refundLatestProduct" layoutX="14.0" layoutY="586.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="152.0" text="REFUNDER SENESTE" />
-                                <Button fx:id="refundAllProducts" layoutX="167.0" layoutY="586.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="131.0" text="REFUNDER ALLE" />
-                                <TextField fx:id="deleteCustomerID" layoutX="473.0" layoutY="391.0" prefHeight="71.0" prefWidth="442.0" promptText="KUNDE / BRUGER ID" />
-                                <TextField fx:id="deleteCustomerName" layoutX="473.0" layoutY="479.0" prefHeight="71.0" prefWidth="442.0" promptText="KUNDE / BRUGER NAVN NAVN" />
-                                <Button blendMode="RED" layoutX="473.0" layoutY="593.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="319.0" text="DELETE" />
-                                <CheckBox layoutX="473.0" layoutY="550.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="248.0" text="SLET ALLE TILHØRENDE DATA" />
-                                <Label layoutX="14.0" layoutY="26.0" prefHeight="36.0" prefWidth="394.0" text="OPRET NYE BRUGER" />
-                                <Label layoutX="14.0" layoutY="359.0" prefHeight="25.0" prefWidth="264.0" text="REFUNDER KUNDER" />
-                                <Label layoutX="473.0" layoutY="359.0" prefHeight="25.0" prefWidth="331.0" text="SLET KUNDER ELLER BRUGER" />
+                                <TextField fx:id="createUserID" layoutX="13.0" layoutY="55.0" prefHeight="45.0" prefWidth="254.0" promptText="ANSAT ID" AnchorPane.leftAnchor="15.0" />
+                                <TextField fx:id="createUserPhoneNumber" layoutX="12.0" layoutY="112.0" prefHeight="45.0" prefWidth="254.0" promptText="TELEFON NR." AnchorPane.leftAnchor="15.0" />
+                                <TextField fx:id="createUserName" layoutX="14.0" layoutY="170.0" prefHeight="45.0" prefWidth="254.0" promptText="BRUGERNAVN" AnchorPane.leftAnchor="15.0" />
+                                <CheckBox fx:id="adminRights" layoutX="14.0" layoutY="219.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="260.0" text="ADMIN RETTIGHEDER" AnchorPane.leftAnchor="15.0" />
+                                <Button fx:id="createUserButton" layoutX="14.0" layoutY="263.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="254.0" text="OPRET BRUGER" AnchorPane.leftAnchor="15.0" />
+                                <TextField fx:id="refundCustomerID" layoutX="14.0" layoutY="391.0" prefHeight="45.0" prefWidth="254.0" promptText="KUNDE ID" AnchorPane.leftAnchor="15.0" />
+                                <TextField fx:id="refundCustomerName" layoutX="14.0" layoutY="453.0" prefHeight="45.0" prefWidth="254.0" promptText="KUNDE NAVN" AnchorPane.leftAnchor="15.0" />
+                                <TextField fx:id="currentRefundableBalance" layoutX="14.0" layoutY="514.0" prefHeight="45.0" prefWidth="254.0" promptText="BELØB TIL REFUNDERING" AnchorPane.leftAnchor="15.0" />
+                                <Button fx:id="refundLatestProduct" layoutX="14.0" layoutY="586.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="254.0" text="REFUNDER BELØB" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="15.0" />
+                                <TextField fx:id="deleteCustomerID" layoutX="469.0" layoutY="58.0" prefHeight="71.0" prefWidth="442.0" promptText="KUNDE / BRUGER ID" AnchorPane.leftAnchor="470.0" />
+                                <TextField fx:id="deleteCustomerName" layoutX="470.0" layoutY="141.0" prefHeight="71.0" prefWidth="442.0" promptText="KUNDE / BRUGER NAVN" AnchorPane.leftAnchor="470.0" />
+                                <Button layoutX="470.0" layoutY="238.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="319.0" text="SLET" AnchorPane.leftAnchor="470.0" />
+                                <Label layoutX="16.0" layoutY="16.0" prefHeight="36.0" prefWidth="394.0" text="OPRET NY ANSAT" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="20.0" />
+                                <Label layoutX="14.0" layoutY="359.0" prefHeight="25.0" prefWidth="264.0" text="REFUNDER KUNDER" AnchorPane.leftAnchor="15.0" />
+                                <Label layoutX="468.0" layoutY="21.0" prefHeight="25.0" prefWidth="331.0" text="SLET KUNDE ELLER ANSAT" AnchorPane.leftAnchor="470.0" AnchorPane.topAnchor="20.0" />
                             </children></AnchorPane>
                     </content>
                 </Tab>
@@ -134,7 +134,7 @@
         <Pane prefHeight="58.0" prefWidth="1031.0" />
         <TextFlow prefHeight="58.0" prefWidth="1031.0">
             <children>
-                <Label prefHeight="58.0" prefWidth="601.0" text="CREDIT SYSTEM">
+                <Label prefHeight="58.0" prefWidth="601.0" text="KREDIT SYSTEM">
                     <font>
                         <Font size="46.0" />
                     </font>
