@@ -9,6 +9,8 @@ import javafx.stage.Stage;
 import java.awt.*;
 import java.io.IOException;
 import java.io.File;
+import java.util.*;
+import java.io.*;
 import java.util.Scanner;
 
 public class Main extends Application {
@@ -26,7 +28,7 @@ public class Main extends Application {
     }
 
 
-    public static void main(String[] args) { launch(args); }
+    public static void main(String[] args)  throws Exception { launch(args);}
 
 
 }

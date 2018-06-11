@@ -86,7 +86,7 @@ public class ScrollPaneController implements Initializable {
                 obsTableList.add(p);
             }
         }
-        productListTable.setEditable(true);
+        productListTable.setEditable(false);
 
     productListTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
         @Override
@@ -188,6 +188,7 @@ public class ScrollPaneController implements Initializable {
         label2.setAlignment(Pos.TOP_RIGHT);
         scrollPane.setContent(grid);
         grid.add(label2, 1 , 0);
+
 
         int counter = 0;
         int rowCounter = 0;
