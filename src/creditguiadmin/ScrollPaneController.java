@@ -63,13 +63,13 @@ public class ScrollPaneController implements Initializable {
     public Button cancleList;
 
     Product product1 = new Product(1, "Bananer");
-    Product product2 = new Product(2, "Aebler");
+    Product product2 = new Product(2, "Æbler");
     Product product3 = new Product(3, "Citroner");
     Product product4 = new Product(4, "Appelsiner");
     List<Product> productArrayList1 = Arrays.asList(product1, product2);
     List<Product> productArrayList2 = Arrays.asList(product3, product4);
-    Category category1 = new Category("venstre",productArrayList1);
-    Category category2 = new Category("hoejre", productArrayList2);
+    Category category1 = new Category("Venstre",productArrayList1);
+    Category category2 = new Category("Højre", productArrayList2);
     List<Category> categories = Arrays.asList(category1, category2);
     ObservableList<Product> obsTableList = FXCollections.observableArrayList(productList);
     private List<Product> allProducts = new ArrayList<>();
@@ -124,7 +124,7 @@ public class ScrollPaneController implements Initializable {
         choosePrduct.getItems().addAll("name", "id");
         choosePrduct.setValue("name");
 
-        searchForProduct.setPromptText("Soe nu!");
+        searchForProduct.setPromptText("Søg");
         searchForProduct.setOnKeyReleased(keyEvent -> {
             final String name = "name";
             obsTableList.setAll(allProducts);
@@ -145,9 +145,6 @@ public class ScrollPaneController implements Initializable {
                 flProducts.setPredicate(null);//This is same as saying flProduct.setPredicate(p->true);
             }
         });
-
-
-
 
     }
 
@@ -190,7 +187,7 @@ public class ScrollPaneController implements Initializable {
         label2.setFont(Font.font("San Francisco", 30));
         label2.setAlignment(Pos.TOP_RIGHT);
         scrollPane.setContent(grid);
-        grid.add(label2, 1 , 1);
+        grid.add(label2, 1 , 0);
 
         int counter = 0;
         int rowCounter = 0;
@@ -205,11 +202,11 @@ public class ScrollPaneController implements Initializable {
             productButton.setMaxSize(300,80);
             productButton.setMinSize(300,80);
 
-            Button returnButton = new Button("back to 80's");
+            Button returnButton = new Button("< back");
 
             returnButton.setOnAction(event -> selectCategories());
 
-            returnButton.setStyle("-fx-font: 10 arial; -fx-base: #f08080;");
+            returnButton.setStyle("-fx-font: 15 arial; -fx-base: #f08080;");
             returnButton.setMaxSize(150,30);
             returnButton.setMinSize(150,30);
             grid.add(returnButton, 0,0);
@@ -251,8 +248,6 @@ public class ScrollPaneController implements Initializable {
     }
 
     public void itemToList(MouseEvent mouseEvent) {
-
-
 
         ObservableList<Product> obsProductList = FXCollections.observableArrayList(productList);
 
