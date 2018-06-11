@@ -10,9 +10,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Controller {
+
     public void loginFunction (ActionEvent event)
     {
-
         Parent root;
         try
         {
