@@ -4,17 +4,17 @@ import rest.DTO.Order;
 import rest.DTO.OrderRequest;
 import rest.DTO.Status;
 
+import javax.ws.rs.NotAuthorizedException;
+import javax.ws.rs.NotFoundException;
 import java.util.List;
 
 /**
  * Created by magnus
  */
 public interface OrderClient {
-    void addOrder(OrderRequest orderRequest);
-    Order getOrder (int id);
-    List<Order> getAllOrderByCustomerid (int userid);
-    List<Order> getAllOrderByCompanyid (int companyid);
-    List<Order> getAllOrderByEmployeeid (int employeeid);
-    void updateOrderStatus (int id, Status status);
-    void refundOrder (int id);
+    Order addOrder (OrderRequest orderRequest) throws NotAuthorizedException;
+    Order getOrder (int id) throws NotFoundException, NotAuthorizedException;
+    List<Order> getAllOrderByCustomerid (int userid) throws NotAuthorizedException;
+    Order updateOrderStatus (int id, Status status) throws NotFoundException, NotAuthorizedException;
+    Order refundOrder (int id) throws NotFoundException, NotAuthorizedException;
 }

@@ -1,16 +1,9 @@
 package rest.interfaces;
 
-import rest.DTO.User;
-
-import java.util.List;
+import rest.DTO.Employee;
 
 /**
  * Created by magnus
  */
-public interface EmployeeClient {
-    List<User> getAllEmployees ();
-    User getEmployeeById (int id);
-    void addEmployee (User employee);
-    void updateEmployee (int id, User employee);
-    void removeEmployee (int id);
+public interface EmployeeClient extends DefaultClient<Employee> {
 }

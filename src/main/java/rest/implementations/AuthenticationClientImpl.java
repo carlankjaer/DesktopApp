@@ -1,21 +1,41 @@
 package rest.implementations;
 
+import rest.DTO.LoginDetails;
 import rest.DTO.Role;
 import rest.interfaces.AuthenticationClient;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * Created by magnus
  */
 public class AuthenticationClientImpl implements AuthenticationClient{
-    private static final String AuthenticationService = "http://ec2-18-222-19-131.us-east-2.compute.amazonaws.com:8080/kreditsystem/api/customer";
+    private static final String servicePath = "authentication";
 
     @Override
-    public boolean login() {
-        return false;
+    public String login(LoginDetails loginDetails) {
+        Client client = ClientBuilder.newBuilder().register(LoginDetails.class).build();
+        WebTarget target = client.target(DefaultClientImpl.restService)
+                .path(servicePath+"/login");
+        Response response = target.request()
+                .accept(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(loginDetails, MediaType.APPLICATION_JSON));
+        return response.readEntity(String.class);
     }
 
     @Override
-    public Role getRole() {
-        return null;
+    public Role getRole(String jwt) {
+        Client client = ClientBuilder.newBuilder().register(String.class).build();
+        WebTarget target = client.target(DefaultClientImpl.restService)
+                .path(servicePath);
+        Response response = target.request()
+                .accept(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(jwt, MediaType.APPLICATION_JSON));
+        return response.readEntity(Role.class);
     }
 }
