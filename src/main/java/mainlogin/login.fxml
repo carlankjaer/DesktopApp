@@ -8,13 +8,13 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainlogin.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@../CSS/UILayoutScheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mainlogin.Controller">
    <children>
       <TextField fx:id="userID" layoutX="51.0" layoutY="144.0" prefHeight="51.0" prefWidth="472.0" promptText="LOGIN IN ID" />
       <PasswordField fx:id="passwordID" layoutX="51.0" layoutY="244.0" prefHeight="51.0" prefWidth="472.0" promptText="LOGIN PASSWORD" />
       <Pane prefHeight="75.0" prefWidth="600.0">
          <children>
-            <Label layoutX="38.0" prefHeight="75.0" prefWidth="524.0" text="Credit System Login" textAlignment="CENTER">
+            <Label layoutX="38.0" prefHeight="75.0" prefWidth="524.0" text="Kredit System Login" textAlignment="CENTER">
                <font>
                   <Font size="51.0" />
                </font>

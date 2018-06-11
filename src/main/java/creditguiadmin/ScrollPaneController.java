@@ -1,20 +1,24 @@
 package creditguiadmin;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TableView;
+import javafx.scene.Node;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
+//import rest.DTO.Category;
+//import rest.DTO.Product;
 
+import javax.swing.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 
 public class ScrollPaneController implements Initializable {
@@ -23,27 +27,135 @@ public class ScrollPaneController implements Initializable {
     public ScrollPane scrollPane;
     public Button categoriesButton;
     public TableView productTable;
+    public TableColumn productColumn;
+    public List<Product> productList = new ArrayList<>();
+    public Button payForChosenProducts;
+    public TextField createCustomerFirstName;
+    public TextField createCustomerLastName;
+    public TextField createCustomerAddress1;
+    public TextField createCustomerAddress1createCustomerAddress2;
+    public TextField createCustomerCity;
+    public TextField createCustomerZipCode;
+    public TextField createCustomerPhoneNumber;
+    public TextField createCustomerEmail;
+    public TextField createCustomerID;
+    public Button createCustomerButton;
+    public TextField createUserID;
+    public TextField createUserPhoneNumber;
+    public TextField createUserName;
+    public CheckBox adminRights;
+    public Button createUserButton;
+    public TextField refundCustomerID;
+    public TextField refundCustomerName;
+    public TextField currentRefundableBalance;
+    public Button refundLatestProduct;
+    public Button refundAllProducts;
+    public TextField deleteCustomerID;
+    public TextField deleteCustomerName;
+    public TableColumn productIdInPrductTable;
+    public TableColumn productCategoryInTable;
+    public TableColumn productNameInTable;
+    public TableColumn productPriseInTable;
+    public TextField searchForProduct;
+    public TableView productListTable;
+    public ChoiceBox choosePrduct;
+    public Button getProductSearch;
+    public Button cancleList;
 
-    Product product1 = new Product(1, "kqly1");
-    Product product2 = new Product(2, "kqly2");
-    Product product3 = new Product(3, "kqly3");
-    Product product4 = new Product(4, "kqly4");
+    Product product1 = new Product(1, "Bananer");
+    Product product2 = new Product(2, "Æbler");
+    Product product3 = new Product(3, "Citroner");
+    Product product4 = new Product(4, "Appelsiner");
     List<Product> productArrayList1 = Arrays.asList(product1, product2);
     List<Product> productArrayList2 = Arrays.asList(product3, product4);
-    Category category1 = new Category("venstre",productArrayList1);
-    Category category2 = new Category("hoejre", productArrayList2);
+    Category category1 = new Category("Venstre",productArrayList1);
+    Category category2 = new Category("Højre", productArrayList2);
     List<Category> categories = Arrays.asList(category1, category2);
+    ObservableList<Product> obsTableList = FXCollections.observableArrayList(productList);
+    private List<Product> allProducts = new ArrayList<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        System.out.println("test");
+
+
+
+        for (Category cat : categories) {
+            for (Product p : cat.getProductArrayList()) {
+                allProducts.add(p);
+                obsTableList.add(p);
+            }
+        }
+        productListTable.setEditable(true);
+
+    productListTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+
+            System.out.println(event.getClickCount());
+            Node node = event.getPickResult().getIntersectedNode();
+            Product product = null;
+            try{
+                product = (Product) ((TableCell) node).getTableRow().getItem();
+            }catch (Exception e){
+                product = (Product) ((TableCell)node.getParent()).getTableRow().getItem();
+           }
+
+           if(product != null)addToProductList(product);
+
+        }
+    });
+        FilteredList<Product> flProducts = new FilteredList(obsTableList, p -> true);
+        productListTable.setItems(flProducts);
+        productListTable.getColumns().addAll(productNameInTable, productIdInPrductTable, productCategoryInTable);
+
+        productListTable.getColumns();
+        productListTable.setItems(obsTableList);
+        productIdInPrductTable.setCellValueFactory(
+                new PropertyValueFactory<Product, Integer>("id"));
+
+        productNameInTable.setCellValueFactory(
+                new PropertyValueFactory<Product, String>("name"));
+
+        productCategoryInTable.setCellValueFactory(
+                new PropertyValueFactory<Category, String>("name"));
+
+
+        choosePrduct.getItems().addAll("name", "id");
+        choosePrduct.setValue("name");
+
+        searchForProduct.setPromptText("Søg");
+        searchForProduct.setOnKeyReleased(keyEvent -> {
+            final String name = "name";
+            obsTableList.setAll(allProducts);
+            if (choosePrduct.getValue().equals(name)) {
+                obsTableList.removeIf(p -> !p.getName().toLowerCase().contains(searchForProduct.getText().toLowerCase().trim()));
+            }
+            else if (choosePrduct.getValue().equals("id"))
+            {
+                obsTableList.removeIf(p -> !Integer.toString(p.getId()).contains(searchForProduct.getText().toLowerCase().trim()));
+            }
+        });
+
+        choosePrduct.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) ->
+        {//reset table and textfield when new choice is selected
+            if (newVal != null)
+            {
+                searchForProduct.setText("");
+                flProducts.setPredicate(null);//This is same as saying flProduct.setPredicate(p->true);
+            }
+        });
 
     }
 
     public void selectCategories() {
+
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(BUTTON_PADDING));
         grid.setHgap(BUTTON_PADDING);
         grid.setVgap(BUTTON_PADDING);
+
+
 
         scrollPane.setContent(grid);
         int counter = 0;
@@ -62,6 +174,7 @@ public class ScrollPaneController implements Initializable {
             else
                 grid.add(categoryButton, rowCounter, 2);
         }
+
     }
 
     public void choosenCategory (Category category) {
@@ -74,7 +187,7 @@ public class ScrollPaneController implements Initializable {
         label2.setFont(Font.font("San Francisco", 30));
         label2.setAlignment(Pos.TOP_RIGHT);
         scrollPane.setContent(grid);
-        grid.add(label2, 1 , 1);
+        grid.add(label2, 1 , 0);
 
         int counter = 0;
         int rowCounter = 0;
@@ -86,17 +199,18 @@ public class ScrollPaneController implements Initializable {
             productButton.setOnAction(event -> scrollPane.setContent(new Button()));
 
             productButton.setStyle("-fx-font: 22 arial; -fx-base: #b6e7c9;");
-            productButton.setMaxSize(350,80);
-            productButton.setMinSize(350,80);
+            productButton.setMaxSize(300,80);
+            productButton.setMinSize(300,80);
 
-            Button returnButton = new Button("back to 80's");
+            Button returnButton = new Button("< back");
 
             returnButton.setOnAction(event -> selectCategories());
 
-            returnButton.setStyle("-fx-font: 10 arial; -fx-base: #f08080;");
+            returnButton.setStyle("-fx-font: 15 arial; -fx-base: #f08080;");
             returnButton.setMaxSize(150,30);
             returnButton.setMinSize(150,30);
             grid.add(returnButton, 0,0);
+
 
             productButton.setOnAction(event -> addToProductList(product));
 
@@ -111,14 +225,35 @@ public class ScrollPaneController implements Initializable {
 
     public void addToProductList(Product product) {
 
-        ArrayList<String> productList = new ArrayList<String>();
+        productList.add(product);
 
-        productList.add(product.getName());
+        ObservableList<Product> obsProductList = FXCollections.observableArrayList(productList);
 
-        
+        productColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
 
-        System.out.println("" + productList);
+        productTable.setItems(obsProductList);
+
+        cancleList.setOnAction(event -> {
+            obsProductList.clear();
+            productList.clear();
+        });
+
 
     }
 
+    public void removeItemsFromList(){
+
+
+
+    }
+
+    public void itemToList(MouseEvent mouseEvent) {
+
+        ObservableList<Product> obsProductList = FXCollections.observableArrayList(productList);
+
+        productColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
+
+        productTable.setItems(obsProductList);
+
+    }
 }
