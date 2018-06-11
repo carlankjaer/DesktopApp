@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.NumberAxis?>
-<?import javafx.scene.chart.StackedAreaChart?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
@@ -41,20 +40,20 @@
                                         <TableColumn fx:id="productColumn" prefWidth="351.0" text="Produkt" />
                                     </columns>
                                 </TableView>
-                                <TableView layoutX="14.0" layoutY="326.0" prefHeight="341.0" prefWidth="619.0">
+                                <TableView fx:id="productListTable" layoutX="14.0" layoutY="326.0" onMouseClicked="#itemToList" prefHeight="341.0" prefWidth="619.0">
                                     <columns>
-                                        <TableColumn prefWidth="107.0" text="Produkt ID" />
-                                        <TableColumn prefWidth="315.0" text="Produkt Navn" />
-                                        <TableColumn prefWidth="94.0" text="Prisen" />
-                                        <TableColumn prefWidth="102.0" text="Beholdning" />
+                                        <TableColumn fx:id="productIdInPrductTable" prefWidth="107.0" text="Produkt ID" />
+                                        <TableColumn fx:id="productCategoryInTable" prefWidth="102.0" text="Kategori" />
+                                        <TableColumn fx:id="productNameInTable" prefWidth="315.0" text="Produkt Navn" />
+                                        <TableColumn fx:id="productPriseInTable" prefWidth="94.0" text="Prisen" />
                                     </columns>
                                 </TableView>
-                                <Button layoutX="657.0" layoutY="616.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="354.0" text="Betal">
+                                <Button fx:id="payForChosenProducts" layoutX="778.0" layoutY="616.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="233.0" text="Betal">
                                     <font>
                                         <Font size="29.0" />
                                     </font>
                                 </Button>
-                                <TextField layoutX="14.0" layoutY="281.0" prefHeight="38.0" prefWidth="220.0" promptText="Soeg Produkt" />
+                                <TextField fx:id="searchForProduct" layoutX="14.0" layoutY="281.0" prefHeight="38.0" prefWidth="220.0" promptText="Søg Produkt" />
                                 <ScrollPane fx:id="scrollPane" layoutX="6.0" layoutY="4.0" prefHeight="270.0" prefWidth="630.0">
                                     <content>
                                         <Button fx:id="categoriesButton" mnemonicParsing="false" onAction="#selectCategories" prefHeight="268.0" prefWidth="627.0" style="-fx-background-color: #b6e7c9;" text="Categories">
@@ -64,6 +63,9 @@
                                         </Button>
                                     </content>
                                 </ScrollPane>
+                                <ChoiceBox fx:id="choosePrduct" layoutX="246.0" layoutY="281.0" prefHeight="38.0" prefWidth="178.0" />
+                                <Button fx:id="getProductSearch" layoutX="435.0" layoutY="281.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="194.0" text="BuildProductTable" />
+                                <Button fx:id="cancleList" layoutX="657.0" layoutY="616.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="110.0" text="Afbryd" />
                             </children>
                         </AnchorPane>
                     </content>
@@ -72,18 +74,17 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <TextField layoutX="21.0" layoutY="24.0" prefHeight="51.0" prefWidth="304.0" promptText="FORNAVN" />
-                                <TextField layoutX="21.0" layoutY="101.0" prefHeight="51.0" prefWidth="304.0" promptText="EFTERNAVN" />
-                                <TextField layoutX="21.0" layoutY="179.0" prefHeight="51.0" prefWidth="304.0" promptText="ADRESSE 1" />
-                                <TextField layoutX="21.0" layoutY="259.0" prefHeight="51.0" prefWidth="304.0" promptText="ADRESSE 2" />
-                                <TextField layoutX="21.0" layoutY="341.0" prefHeight="51.0" prefWidth="304.0" promptText="BY" />
-                                <TextField layoutX="21.0" layoutY="413.0" prefHeight="51.0" prefWidth="304.0" promptText="POST NR." />
-                                <TextField layoutX="21.0" layoutY="517.0" prefHeight="51.0" prefWidth="304.0" promptText="TELEFON NR." />
-                                <TextField layoutX="21.0" layoutY="596.0" prefHeight="51.0" prefWidth="304.0" promptText="E-MAIL" />
-                                <TextField layoutX="516.0" layoutY="24.0" prefHeight="51.0" prefWidth="397.0" promptText="KUNDE NR." />
-                                <CheckBox layoutX="516.0" layoutY="104.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="397.0" text="KAN GAAR I MINUS" />
-                                <CheckBox layoutX="516.0" layoutY="182.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="397.0" text="VIL HAVE E-MAIL MED NYEHELDS/ -AKTIONSTILBUD" />
-                                <Button layoutX="516.0" layoutY="593.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="432.0" text="OPRET NYE KUNDE" />
+                                <TextField fx:id="createCustomerFirstName" layoutX="21.0" layoutY="24.0" prefHeight="51.0" prefWidth="304.0" promptText="FORNAVN" />
+                                <TextField fx:id="createCustomerLastName" layoutX="21.0" layoutY="101.0" prefHeight="51.0" prefWidth="304.0" promptText="EFTERNAVN" />
+                                <TextField fx:id="createCustomerAddress1" layoutX="21.0" layoutY="179.0" prefHeight="51.0" prefWidth="304.0" promptText="ADRESSE 1" />
+                                <TextField fx:id="createCustomerAddress1createCustomerAddress2" layoutX="21.0" layoutY="259.0" prefHeight="51.0" prefWidth="304.0" promptText="ADRESSE 2" />
+                                <TextField fx:id="createCustomerCity" layoutX="21.0" layoutY="341.0" prefHeight="51.0" prefWidth="304.0" promptText="BY" />
+                                <TextField fx:id="createCustomerZipCode" layoutX="21.0" layoutY="413.0" prefHeight="51.0" prefWidth="304.0" promptText="POST NR." />
+                                <TextField fx:id="createCustomerPhoneNumber" layoutX="21.0" layoutY="517.0" prefHeight="51.0" prefWidth="304.0" promptText="TELEFON NR." />
+                                <TextField fx:id="createCustomerEmail" layoutX="21.0" layoutY="596.0" prefHeight="51.0" prefWidth="304.0" promptText="E-MAIL" />
+                                <TextField fx:id="createCustomerID" layoutX="516.0" layoutY="24.0" prefHeight="51.0" prefWidth="397.0" promptText="KUNDE NR." />
+                                <CheckBox layoutX="516.0" layoutY="104.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="397.0" text="KAN GÅ I MINUS" />
+                                <Button fx:id="createCustomerButton" layoutX="516.0" layoutY="593.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="432.0" text="OPRET NYE KUNDE" />
                                 <Label layoutX="516.0" layoutY="75.0" prefHeight="16.0" prefWidth="182.0" text="TELEFON NR. BY DEFAULT " />
                             </children>
                         </AnchorPane>
@@ -93,21 +94,11 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <StackedAreaChart layoutX="355.0" layoutY="53.0" prefHeight="424.0" prefWidth="662.0">
-                                    <xAxis>
-                                        <NumberAxis side="BOTTOM" />
-                                    </xAxis>
-                                    <yAxis>
-                                        <NumberAxis side="LEFT" />
-                                    </yAxis>
-                                </StackedAreaChart>
-                                <Label layoutX="355.0" layoutY="18.0" prefHeight="35.0" prefWidth="369.0" text="KONTO OVERSIGT" />
                                 <TextField layoutX="23.0" layoutY="40.0" prefHeight="45.0" prefWidth="290.0" promptText="BRUGER ID" />
                                 <TextField layoutX="23.0" layoutY="124.0" prefHeight="45.0" prefWidth="290.0" promptText="BRUGER NAVN" />
                                 <TextField layoutX="23.0" layoutY="243.0" prefHeight="45.0" prefWidth="290.0" promptText="KONTO LIGE NU" />
                                 <Button layoutX="752.0" layoutY="603.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="268.0" text="BETAL OG OVERFOER" />
-                                <CheckBox layoutX="23.0" layoutY="311.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="289.0" text="KAN GAAR I MINUS" />
-                                <TextField layoutX="23.0" layoutY="412.0" prefHeight="51.0" prefWidth="324.0" promptText="BELOEB TIL INDBETALE" />
+                                <TextField layoutX="23.0" layoutY="412.0" prefHeight="51.0" prefWidth="324.0" promptText="BELØB TIL INDBETALING" />
                                 <SplitMenuButton layoutX="23.0" layoutY="518.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="327.0">
                                     <items>
                                         <MenuItem mnemonicParsing="false" text="KONTANT" />
