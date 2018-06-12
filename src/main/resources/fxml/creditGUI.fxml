@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="772.0" prefWidth="1031.0" stylesheets="@../CSS/UILayoutScheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="creditguiadmin.ScrollPaneController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="772.0" prefWidth="1031.0" stylesheets="@../CSS/UILayoutScheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="creditguiadmin.UIController">
     <children>
         <TabPane layoutY="57.0" prefHeight="715.0" prefWidth="1031.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
@@ -56,7 +56,7 @@
                                 <TextField fx:id="searchForProduct" layoutX="5.0" layoutY="259.0" prefHeight="38.0" prefWidth="220.0" promptText="Søg Produkt" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="260.0" />
                                 <ScrollPane fx:id="scrollPane" layoutX="6.0" layoutY="4.0" prefHeight="250.0" prefWidth="630.0" AnchorPane.topAnchor="5.0">
                                     <content>
-                                        <Button fx:id="categoriesButton" blendMode="SRC_ATOP" mnemonicParsing="false" onAction="#selectCategories" prefHeight="248.0" prefWidth="628.0" style="-fx-background-color: #b6e7c9;" stylesheets="@../CSS/UILayoutScheme.css" text="KATEGORIER">
+                                        <Button fx:id="categoriesButton" blendMode="SRC_ATOP" mnemonicParsing="false" onAction="#selectCategories" prefHeight="248.0" prefWidth="628.0" stylesheets="@../CSS/UILayoutScheme.css" text="KATEGORIER">
                                             <font>
                                                 <Font name="Arial" size="22.0" />
                                             </font>

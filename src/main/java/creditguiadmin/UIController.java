@@ -13,15 +13,18 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
-//import rest.DTO.Category;
-//import rest.DTO.Product;
+import rest.DTO.Category;
+import rest.DTO.Product;
+import rest.implementations.CategoryClientImpl;
+import rest.interfaces.CategoryClient;
 
 import javax.swing.*;
+import javax.ws.rs.NotAuthorizedException;
 import java.net.URL;
 import java.util.*;
 
 
-public class ScrollPaneController implements Initializable {
+public class UIController implements Initializable {
 
     private static final double BUTTON_PADDING = 10;
     public ScrollPane scrollPane;
@@ -62,15 +65,8 @@ public class ScrollPaneController implements Initializable {
     public Button getProductSearch;
     public Button cancleList;
 
-    Product product1 = new Product(1, "Bananer");
-    Product product2 = new Product(2, "Æbler");
-    Product product3 = new Product(3, "Citroner");
-    Product product4 = new Product(4, "Appelsiner");
-    List<Product> productArrayList1 = Arrays.asList(product1, product2);
-    List<Product> productArrayList2 = Arrays.asList(product3, product4);
-    Category category1 = new Category("Venstre",productArrayList1);
-    Category category2 = new Category("Højre", productArrayList2);
-    List<Category> categories = Arrays.asList(category1, category2);
+    private CategoryClient categoryClient = new CategoryClientImpl();
+    List<Category> categories = categoryClient.getAll();
     ObservableList<Product> obsTableList = FXCollections.observableArrayList(productList);
     private List<Product> allProducts = new ArrayList<>();
 
@@ -78,10 +74,15 @@ public class ScrollPaneController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("test");
 
-
+        try {
+            categories = categoryClient.getAll();
+        }
+        catch (NotAuthorizedException e) {
+            System.out.println(e);
+        }
 
         for (Category cat : categories) {
-            for (Product p : cat.getProductArrayList()) {
+            for (Product p : cat.getProducts()) {
                 allProducts.add(p);
                 obsTableList.add(p);
             }
@@ -191,7 +192,7 @@ public class ScrollPaneController implements Initializable {
 
         int counter = 0;
         int rowCounter = 0;
-        for (Product product : category.getProductArrayList()) {
+        for (Product product : category.getProducts()) {
             counter++;
 
             Button productButton = new Button(product.getName());

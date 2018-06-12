@@ -19,6 +19,12 @@
     -fx-background-color: accent-color;
 }
 
+.button:pressed {
+    -fx-background-color: light-primary-color;
+    -fx-border-color: accent-color;
+    -fx-text-fill: accent-color;
+}
+
 .tab-pane {
     -fx-tab-min-width:200px;
     -fx-tab-max-width:200px;
