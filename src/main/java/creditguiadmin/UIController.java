@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import rest.DTO.Category;
+import rest.DTO.Company;
 import rest.DTO.Product;
 import rest.implementations.CategoryClientImpl;
 import rest.interfaces.CategoryClient;
@@ -65,21 +66,27 @@ public class UIController implements Initializable {
     public Button getProductSearch;
     public Button cancleList;
 
-    private CategoryClient categoryClient = new CategoryClientImpl();
-    List<Category> categories = categoryClient.getAll();
+    Product product1 = new Product("Bananer", 100, new Company(1,"PF"));
+    Product product2 = new Product("Æbler", 100, new Company(1,"PF"));
+    Product product3 = new Product("Citroner", 100, new Company(1,"PF"));
+    List<Product> productArrayList1 = Arrays.asList(product1, product2);
+    List<Product> productArrayList2 = Arrays.asList(product3);
+    Category category1 = new Category(1,"Venstre",productArrayList1, new Company(1,"PF"));
+    Category category2 = new Category(2,"Højre", productArrayList2, new Company(2, "PF"));
+    List<Category> categories = Arrays.asList(category1, category2);
     ObservableList<Product> obsTableList = FXCollections.observableArrayList(productList);
     private List<Product> allProducts = new ArrayList<>();
+
+    private CategoryClient categoryClient = new CategoryClientImpl();
+    /*List<Category> categories = categoryClient.getAll();
+    ObservableList<Product> obsTableList = FXCollections.observableArrayList(productList);
+    private List<Product> allProducts = new ArrayList<>();*/
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("test");
 
-        try {
-            categories = categoryClient.getAll();
-        }
-        catch (NotAuthorizedException e) {
-            System.out.println(e);
-        }
+
 
         for (Category cat : categories) {
             for (Product p : cat.getProducts()) {
@@ -92,6 +99,7 @@ public class UIController implements Initializable {
     productListTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
+
 
             System.out.println(event.getClickCount());
             Node node = event.getPickResult().getIntersectedNode();
@@ -119,7 +127,11 @@ public class UIController implements Initializable {
                 new PropertyValueFactory<Product, String>("name"));
 
         productCategoryInTable.setCellValueFactory(
-                new PropertyValueFactory<Category, String>("name"));
+                new PropertyValueFactory<Product, Double>("price"));
+
+        productCategoryInTable.setCellValueFactory(
+                new PropertyValueFactory<Product, String>("company"));
+
 
 
         choosePrduct.getItems().addAll("name", "id");
@@ -179,6 +191,13 @@ public class UIController implements Initializable {
     }
 
     public void choosenCategory (Category category) {
+        try {
+            List<Category> newcategories = categoryClient.getAll();
+
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(BUTTON_PADDING));
         grid.setHgap(BUTTON_PADDING);
