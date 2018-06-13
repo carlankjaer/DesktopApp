@@ -71,6 +71,7 @@ public class UIController implements Initializable {
     public TableColumn customerListTableFirstname;
     public TableColumn customerListTableLastname;
     public TableColumn customerListTableAddress;
+    public TableColumn customerListTableUserID;
 
     Product product1;
     Product product2 = new Product("Æbler", 100, new Company(1,"PF"));
