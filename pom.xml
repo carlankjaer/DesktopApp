@@ -56,10 +56,6 @@
             <version>2.27</version>
         </dependency>
         <dependency>
-            <groupId></groupId>
-            <artifactId></artifactId>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>

@@ -18,12 +18,10 @@ import rest.DTO.Company;
 import rest.DTO.Product;
 import rest.implementations.CategoryClientImpl;
 import rest.interfaces.CategoryClient;
-
 import javax.swing.*;
 import javax.ws.rs.NotAuthorizedException;
 import java.net.URL;
 import java.util.*;
-
 
 public class UIController implements Initializable {
 
@@ -86,17 +84,17 @@ public class UIController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("test");
 
-
-
         for (Category cat : categories) {
             for (Product p : cat.getProducts()) {
                 allProducts.add(p);
                 obsTableList.add(p);
             }
         }
+
         productListTable.setEditable(true);
 
     productListTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
         @Override
         public void handle(MouseEvent event) {
 
