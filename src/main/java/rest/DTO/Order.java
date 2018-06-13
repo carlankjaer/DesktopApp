@@ -10,7 +10,6 @@ import java.util.List;
 public class Order {
     private int id;
     private Date date;
-    private Company company;
     private Status status;
     private User customer;
     private User employee;
@@ -22,16 +21,27 @@ public class Order {
         this.id = counter;
         counter++;
     }
-    public Order(Company company, Status status, User customer, User employee, List<Product> products) {
+
+    public Order(User customer, User employee, List<Product> products) {
         this.id = counter;
         counter++;
         this.date = new Date();
-        this.company = company;
+        this.status = Status.error;
+        this.customer = customer;
+        this.employee = employee;
+        this.products = products;
+    }
+
+    public Order(Status status, User customer, User employee, List<Product> products) {
+        this.id = counter;
+        counter++;
+        this.date = new Date();
         this.status = status;
         this.customer = customer;
         this.employee = employee;
         this.products = products;
     }
+
 
     public int getId() {
         return id;
@@ -55,14 +65,6 @@ public class Order {
 
     public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
     }
 
     public List<Product> getProducts() {
@@ -91,5 +93,10 @@ public class Order {
 
     public void setEmployee(User employee) {
         this.employee = employee;
+    }
+
+    public static int getNewInt () {
+        counter++;
+        return counter-1;
     }
 }

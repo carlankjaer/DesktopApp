@@ -14,7 +14,6 @@ public class User {
     private Date date;
     private Role role;
     private Customer customer;
-    private Employee employee;
 
     private static int counter = 1;
 
@@ -35,7 +34,7 @@ public class User {
         this.customer = customer;
     }
 
-    public User(String username, String password, String firstname, String lastname, Employee employee) {
+    public User(String username, String password, String firstname, String lastname) {
         this.id = counter;
         counter++;
         this.username = username;
@@ -44,7 +43,6 @@ public class User {
         this.lastname = lastname;
         this.date = new Date();
         this.role = Role.EMPLOYEE;
-        this.employee = employee;
     }
 
     public int getId() {
@@ -111,11 +109,9 @@ public class User {
         this.customer = customer;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public static int getNewId () {
+        counter++;
+        return counter-1;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
 }

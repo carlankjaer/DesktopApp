@@ -10,22 +10,25 @@ public class Category {
     private int id;
     private String name;
     private List<Product> products = new ArrayList<>();
-    private Company company;
+
+    private static int counter = 0;
 
     public Category() {
+        this.id = counter;
+        counter++;
     }
 
-    public Category(int id, String name, Company company) {
-        this.id = id;
+    public Category(String name) {
+        this.id = counter;
+        counter++;
         this.name = name;
-        this.company = company;
     }
 
-    public Category(int id, String name, List<Product> products, Company company) {
-        this.id = id;
+    public Category(String name, List<Product> products) {
+        this.id = counter;
+        counter++;
         this.name = name;
         this.products = products;
-        this.company = company;
     }
 
     public int getId() {
@@ -44,14 +47,6 @@ public class Category {
         this.name = name;
     }
 
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
     public List<Product> getProducts() {
         return products;
     }
@@ -62,6 +57,11 @@ public class Category {
 
     public void addProduct (Product product) {
         this.products.add(product);
+    }
+
+    public static int getNewId () {
+        counter++;
+        return counter-1;
     }
 }
 
