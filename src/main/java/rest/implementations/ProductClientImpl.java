@@ -1,6 +1,5 @@
 package rest.implementations;
 
-import rest.DTO.Category;
 import rest.DTO.Product;
 import rest.interfaces.ProductClient;
 

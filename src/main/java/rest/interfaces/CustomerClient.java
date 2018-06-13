@@ -1,6 +1,5 @@
 package rest.interfaces;
 
-import rest.DTO.Customer;
 import rest.DTO.User;
 
 /**

@@ -1,6 +1,5 @@
 package rest.implementations;
 
-import rest.DTO.Customer;
 import rest.DTO.User;
 import rest.interfaces.CustomerClient;
 

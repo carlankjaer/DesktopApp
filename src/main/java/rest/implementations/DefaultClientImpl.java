@@ -1,6 +1,5 @@
 package rest.implementations;
 
-import rest.DTO.Customer;
 import rest.interfaces.DefaultClient;
 
 import javax.ws.rs.Consumes;
