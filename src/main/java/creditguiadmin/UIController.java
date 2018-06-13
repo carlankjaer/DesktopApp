@@ -86,7 +86,7 @@ public class UIController implements Initializable {
     User user2 = new User("caroline_anders", "caro1901", "Carl", "Andersen", customer2);
     List<User> users = Arrays.asList(user1, user2);
     ObservableList<User> obsUserTableList = FXCollections.observableArrayList(users);
-    private List<User> allCustomers = new ArrayList<>();
+    private List<User> allUsers = new ArrayList<>();
 
     private CategoryClient categoryClient = new CategoryClientImpl();
     private ProductClient productClient = new ProductClientImpl();
@@ -136,10 +136,10 @@ public class UIController implements Initializable {
                 new PropertyValueFactory<Product, String>("name"));
 
         productCategoryInTable.setCellValueFactory(
-                new PropertyValueFactory<Product, Double>("price"));
+                new PropertyValueFactory<Category, String>("category"));
 
-        productCategoryInTable.setCellValueFactory(
-                new PropertyValueFactory<Product, String>("company"));
+        productPriseInTable.setCellValueFactory(
+                new PropertyValueFactory<Product, Double>("price"));
 
 
         //Sets values on choice box and adds "Navn" as standard search key
