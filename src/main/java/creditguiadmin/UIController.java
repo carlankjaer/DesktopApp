@@ -69,13 +69,13 @@ public class UIController implements Initializable {
     public TableColumn customerListTableAddress;
     public TableColumn customerListTableUserID;
 
-    Product product1 = new Product("Bananer", 100, new Company(1, "PF"));
-    Product product2 = new Product("Æbler", 100, new Company(1,"PF"));
-    Product product3 = new Product("Citroner", 100, new Company(1,"PF"));
+    Product product1 = new Product("Bananer", 100);
+    Product product2 = new Product("Æbler", 100);
+    Product product3 = new Product("Citroner", 100);
     List<Product> productArrayList1 = Arrays.asList(product1, product2);
     List<Product> productArrayList2 = Arrays.asList(product3);
-    Category category1 = new Category(1,"Venstre",productArrayList1, new Company(1,"PF"));
-    Category category2 = new Category(2,"Højre", productArrayList2, new Company(2, "PF"));
+    Category category1 = new Category("Venstre", productArrayList1);
+    Category category2 = new Category("Højre", productArrayList2);
     List<Category> categories = Arrays.asList(category1, category2);
     ObservableList<Product> obsTableList = FXCollections.observableArrayList(productList);
     private List<Product> allProducts = new ArrayList<>();
@@ -103,8 +103,6 @@ public class UIController implements Initializable {
                 obsTableList.add(p);
             }
         }
-
-
 
         productListTable.setEditable(false);
 
