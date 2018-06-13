@@ -7,19 +7,19 @@ public class Product {
     private int id;
     private String name;
     private double price;
-    private Company company;
 
-    private static int counter = 0;
+    private static int counter = 1;
 
     public Product() {
+        id = counter;
+        counter++;
     }
 
-    public Product(String name, double price, Company company) {
+    public Product(String name, double price) {
         this.id = counter;
         counter++;
         this.name = name;
         this.price = price;
-        this.company = company;
     }
 
     public int getId() {
@@ -46,11 +46,8 @@ public class Product {
         this.price = price;
     }
 
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
+    public static int getNewId () {
+        counter++;
+        return counter-1;
     }
 }

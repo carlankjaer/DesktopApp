@@ -1,7 +1,5 @@
 package rest.DTO;
 
-import java.util.List;
-
 /**
  * Created by magnus
  */
@@ -9,14 +7,17 @@ public class Customer {
     private String phonenumber;
     private String mail;
     private String address;
-    private List<Account> accounts;
+    private Account account;
 
-    public Customer() {}
+    public Customer() {
+        this.account = new Account(0,0);
+    }
 
     public Customer(String phonenumber, String mail, String address) {
         this.phonenumber = phonenumber;
         this.mail = mail;
         this.address = address;
+        this.account = new Account(0,0);
     }
 
     public String getPhonenumber() {
@@ -43,15 +44,11 @@ public class Customer {
         this.address = address;
     }
 
-    public List<Account> getAccounts() {
-        return accounts;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setAccounts(List<Account> accounts) {
-        this.accounts = accounts;
-    }
-
-    public void addAccount (Account account) {
-        this.accounts.add(account);
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }
