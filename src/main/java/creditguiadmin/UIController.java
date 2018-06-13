@@ -13,9 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
-import rest.DTO.Category;
-import rest.DTO.Company;
-import rest.DTO.Product;
+import rest.DTO.*;
 import rest.implementations.CategoryClientImpl;
 import rest.implementations.ProductClientImpl;
 import rest.interfaces.CategoryClient;
@@ -73,7 +71,7 @@ public class UIController implements Initializable {
     public TableColumn customerListTableAddress;
     public TableColumn customerListTableUserID;
 
-    Product product1;
+    Product product1 = new Product("Bananer", 100, new Company(1, "PF"));
     Product product2 = new Product("Æbler", 100, new Company(1,"PF"));
     Product product3 = new Product("Citroner", 100, new Company(1,"PF"));
     List<Product> productArrayList1 = Arrays.asList(product1, product2);
@@ -83,6 +81,8 @@ public class UIController implements Initializable {
     List<Category> categories = Arrays.asList(category1, category2);
     ObservableList<Product> obsTableList = FXCollections.observableArrayList(productList);
     private List<Product> allProducts = new ArrayList<>();
+
+    Customer customer = new Customer("27831230", "carlankjaer@gmail.com", "Teglgårdsvej 905, 2.tv");
 
     private CategoryClient categoryClient = new CategoryClientImpl();
     private ProductClient productClient = new ProductClientImpl();
@@ -106,7 +106,6 @@ public class UIController implements Initializable {
 
         @Override
         public void handle(MouseEvent event) {
-
 
             System.out.println(event.getClickCount());
             Node node = event.getPickResult().getIntersectedNode();
@@ -141,17 +140,16 @@ public class UIController implements Initializable {
 
 
 
-        choosePrduct.getItems().addAll("name", "id");
-        choosePrduct.setValue("name");
+        choosePrduct.getItems().addAll("Navn", "ID");
+        choosePrduct.setValue("Navn");
 
         searchForProduct.setPromptText("Søg");
         searchForProduct.setOnKeyReleased(keyEvent -> {
-            final String name = "name";
             obsTableList.setAll(allProducts);
-            if (choosePrduct.getValue().equals(name)) {
+            if (choosePrduct.getValue().equals("Navn")) {
                 obsTableList.removeIf(p -> !p.getName().toLowerCase().contains(searchForProduct.getText().toLowerCase().trim()));
             }
-            else if (choosePrduct.getValue().equals("id"))
+            else if (choosePrduct.getValue().equals("ID"))
             {
                 obsTableList.removeIf(p -> !Integer.toString(p.getId()).contains(searchForProduct.getText().toLowerCase().trim()));
             }
@@ -166,6 +164,28 @@ public class UIController implements Initializable {
             }
         });
 
+        chooseSearchCustomer.getItems().addAll("ID", "Telefon nummer", "Fornavn", "Efternavn", "Addresse");
+        chooseSearchCustomer.setValue("ID");
+
+        searchCustomer.setOnKeyReleased(keyEvent -> {
+
+            if (chooseSearchCustomer.getValue().equals("ID")) {
+
+            }
+            else if (chooseSearchCustomer.getValue().equals("Telefon nummer")) {
+
+            }
+            else if (chooseSearchCustomer.getValue().equals("Fornavn")) {
+
+            }
+            else if (chooseSearchCustomer.getValue().equals("Efternavn")) {
+
+            }
+            else if (chooseSearchCustomer.getValue().equals("Adresse")) {
+
+            }
+        });
+
     }
 
     public void selectCategories() {
@@ -174,8 +194,6 @@ public class UIController implements Initializable {
         grid.setPadding(new Insets(BUTTON_PADDING));
         grid.setHgap(BUTTON_PADDING);
         grid.setVgap(BUTTON_PADDING);
-
-
 
         scrollPane.setContent(grid);
         int counter = 0;
@@ -224,7 +242,7 @@ public class UIController implements Initializable {
 
             productButton.setOnAction(event -> scrollPane.setContent(new Button()));
 
-            productButton.setStyle("-fx-font: 22 arial; -fx-base: #b6e7c9;");
+            productButton.setStyle("-fx-font: 22 arial;");
             productButton.setMaxSize(300,80);
             productButton.setMinSize(300,80);
 
@@ -232,7 +250,7 @@ public class UIController implements Initializable {
 
             returnButton.setOnAction(event -> selectCategories());
 
-            returnButton.setStyle("-fx-font: 15 arial; -fx-base: #f08080;");
+            returnButton.setStyle("-fx-font: 15 arial;");
             returnButton.setMaxSize(150,30);
             returnButton.setMinSize(150,30);
             grid.add(returnButton, 0,0);
@@ -267,12 +285,6 @@ public class UIController implements Initializable {
 
     }
 
-    public void removeItemsFromList(){
-
-
-
-    }
-
     public void itemToList(MouseEvent mouseEvent) {
 
         ObservableList<Product> obsProductList = FXCollections.observableArrayList(productList);
@@ -280,6 +292,10 @@ public class UIController implements Initializable {
         productColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
 
         productTable.setItems(obsProductList);
+
+    }
+
+    public void customerList(User user) {
 
     }
 }
