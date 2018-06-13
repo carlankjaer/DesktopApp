@@ -19,8 +19,6 @@ import rest.implementations.ProductClientImpl;
 import rest.interfaces.CategoryClient;
 import rest.interfaces.ProductClient;
 
-import javax.swing.*;
-import javax.ws.rs.NotAuthorizedException;
 import java.net.URL;
 import java.util.*;
 
@@ -32,6 +30,7 @@ public class UIController implements Initializable {
     public TableView productTable;
     public TableColumn productColumn;
     public List<Product> productList = new ArrayList<>();
+    public List<Customer> cuntList = new ArrayList<>();
     public Button payForChosenProducts;
     public TextField createCustomerFirstName;
     public TextField createCustomerLastName;
@@ -82,7 +81,13 @@ public class UIController implements Initializable {
     ObservableList<Product> obsTableList = FXCollections.observableArrayList(productList);
     private List<Product> allProducts = new ArrayList<>();
 
-    Customer customer = new Customer("27831230", "carlankjaer@gmail.com", "Teglgårdsvej 905, 2.tv");
+    Customer customer1 = new Customer("27831230", "carlankjaer@gmail.com", "Teglgårdsvej 905, 2.tv");
+    Customer customer2 = new Customer("27831231", "ca@classichouse.dk", "Lillevangsvej 218");
+    User user1 = new User("carlankjaer", "ca190195", "Caroline", "Ankjær", customer1);
+    User user2 = new User("caroline_anders", "caro1901", "Carl", "Andersen", customer2);
+    List<User> users = Arrays.asList(user1, user2);
+    ObservableList<User> obsUserTableList = FXCollections.observableArrayList(users);
+    private List<User> allCustomers = new ArrayList<>();
 
     private CategoryClient categoryClient = new CategoryClientImpl();
     private ProductClient productClient = new ProductClientImpl();
@@ -100,14 +105,13 @@ public class UIController implements Initializable {
             }
         }
 
-        productListTable.setEditable(true);
+        productListTable.setEditable(false);
 
     productListTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
         @Override
         public void handle(MouseEvent event) {
 
-            System.out.println(event.getClickCount());
             Node node = event.getPickResult().getIntersectedNode();
             Product product = null;
             try{
@@ -120,9 +124,9 @@ public class UIController implements Initializable {
 
         }
     });
+
+        //Creates filtered list with products
         FilteredList<Product> flProducts = new FilteredList(obsTableList, p -> true);
-        productListTable.setItems(flProducts);
-        productListTable.getColumns().addAll(productNameInTable, productIdInPrductTable, productCategoryInTable);
 
         productListTable.getColumns();
         productListTable.setItems(obsTableList);
@@ -139,10 +143,12 @@ public class UIController implements Initializable {
                 new PropertyValueFactory<Product, String>("company"));
 
 
-
+        //Sets values on choice box and adds "Navn" as standard search key
         choosePrduct.getItems().addAll("Navn", "ID");
         choosePrduct.setValue("Navn");
 
+        //Filters search after search key (ex. "Navn")
+        //Filters customers when typing starts so the only customers that are shown in the table are the people who matches the search
         searchForProduct.setPromptText("Søg");
         searchForProduct.setOnKeyReleased(keyEvent -> {
             obsTableList.setAll(allProducts);
@@ -164,11 +170,34 @@ public class UIController implements Initializable {
             }
         });
 
+        //Creates filtered list with customer
+        FilteredList<Customer> flCustomer = new FilteredList(obsUserTableList, p -> true);
+
+        customerListTable.getColumns();
+        customerListTable.setItems(obsUserTableList);
+        customerListTableUserID.setCellValueFactory(
+                new PropertyValueFactory<Customer, Integer>("id"));
+
+        customerListTablePhone.setCellValueFactory(
+                new PropertyValueFactory<Customer, String>("phonenumber"));
+
+        customerListTableFirstname.setCellValueFactory(
+                new PropertyValueFactory<Customer, String>("firstname"));
+
+        customerListTableLastname.setCellValueFactory(
+                new PropertyValueFactory<Customer, String>("lastname"));
+
+        customerListTableAddress.setCellValueFactory(
+                new PropertyValueFactory<Customer, String>("address"));
+
+        //Sets values on choice box and adds ID as standard search key
         chooseSearchCustomer.getItems().addAll("ID", "Telefon nummer", "Fornavn", "Efternavn", "Addresse");
         chooseSearchCustomer.setValue("ID");
 
+        //Filters search after search key (ex. ID)
+        //Filters customers when typing starts so the only customers that are shown in the table are the people who matches the search
         searchCustomer.setOnKeyReleased(keyEvent -> {
-
+            obsUserTableList.setAll(allCustomers);
             if (chooseSearchCustomer.getValue().equals("ID")) {
 
             }
@@ -183,6 +212,15 @@ public class UIController implements Initializable {
             }
             else if (chooseSearchCustomer.getValue().equals("Adresse")) {
 
+            }
+        });
+
+        chooseSearchCustomer.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) ->
+        {//reset table and textfield when new choice is selected
+            if (newVal != null)
+            {
+                searchCustomer.setText("");
+                flCustomer.setPredicate(null);//This is same as saying flProduct.setPredicate(p->true);
             }
         });
 
@@ -292,10 +330,6 @@ public class UIController implements Initializable {
         productColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
 
         productTable.setItems(obsProductList);
-
-    }
-
-    public void customerList(User user) {
 
     }
 }

@@ -23,26 +23,26 @@ public class User {
         counter++;
     }
 
-    public User(String username, String password, String firstname, String lastname, Date date, Customer customer) {
+    public User(String username, String password, String firstname, String lastname, Customer customer) {
         this.id = counter;
         counter++;
         this.username = username;
         this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.date = date;
+        this.date = new Date();
         this.role = Role.CUSTOMER;
         this.customer = customer;
     }
 
-    public User(String username, String password, String firstname, String lastname, Date date, Employee employee) {
+    public User(String username, String password, String firstname, String lastname, Employee employee) {
         this.id = counter;
         counter++;
         this.username = username;
         this.password = password;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.date = date;
+        this.date = new Date();
         this.role = Role.EMPLOYEE;
         this.employee = employee;
     }

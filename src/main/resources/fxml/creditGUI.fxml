@@ -15,11 +15,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="772.0" prefWidth="1031.0" stylesheets="@../CSS/UILayoutScheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="creditguiadmin.UIController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="772.0" prefWidth="1031.0" stylesheets="@../CSS/UILayoutScheme.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="creditguiadmin.UIController">
     <children>
         <TabPane layoutY="57.0" prefHeight="715.0" prefWidth="1031.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
-                <Tab text="PRODUKTER OG EKSPEDITION">
+                <Tab text="EKSPEDITION">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
@@ -105,6 +105,30 @@
                         <TextField fx:id="searchCustomer" layoutX="373.0" layoutY="26.0" prefHeight="45.0" prefWidth="342.0" promptText="Søg Kunde" AnchorPane.leftAnchor="374.0" AnchorPane.topAnchor="25.0" />
                         <ChoiceBox fx:id="chooseSearchCustomer" layoutX="709.0" layoutY="25.0" prefHeight="45.0" prefWidth="252.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="25.0" />
                             </children></AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="HÅNDTER PRODUKTER">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <Label layoutX="365.0" layoutY="21.0" text="OPRET PRODUKT" AnchorPane.leftAnchor="365.0" />
+                                <Label layoutX="25.0" layoutY="21.0" text="REDIGER PRODUKT" AnchorPane.leftAnchor="25.0" />
+                                <Label layoutX="694.0" layoutY="21.0" text="SLET PRODUKT" AnchorPane.leftAnchor="695.0" />
+                                <TextField layoutX="25.0" layoutY="56.0" prefHeight="45.0" prefWidth="255.0" promptText="PRODUKT ID" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="55.0" />
+                                <TextField layoutX="25.0" layoutY="118.0" prefHeight="45.0" prefWidth="255.0" promptText="PRODUKT NAVN" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="120.0" />
+                                <TextField layoutX="25.0" layoutY="181.0" prefHeight="45.0" prefWidth="255.0" promptText="KATEGORI" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="179.0" />
+                                <TextField layoutX="365.0" layoutY="55.0" prefHeight="45.0" prefWidth="255.0" promptText="PRODUKT NAVN" AnchorPane.leftAnchor="365.0" AnchorPane.topAnchor="55.0" />
+                                <TextField layoutX="693.0" layoutY="55.0" prefHeight="45.0" prefWidth="255.0" promptText="PRODUKT ID" AnchorPane.leftAnchor="695.0" AnchorPane.topAnchor="55.0" />
+                                <TextField layoutX="360.0" layoutY="120.0" prefHeight="45.0" prefWidth="255.0" promptText="PRIS" AnchorPane.leftAnchor="365.0" AnchorPane.topAnchor="120.0" />
+                                <TextField layoutX="365.0" layoutY="179.0" prefHeight="45.0" prefWidth="255.0" promptText="KATEGORI" AnchorPane.leftAnchor="365.0" AnchorPane.topAnchor="179.0" />
+                                <TextField layoutX="704.0" layoutY="106.0" prefHeight="45.0" prefWidth="255.0" promptText="PRODUKT NAVN" AnchorPane.leftAnchor="695.0" AnchorPane.topAnchor="120.0" />
+                                <TextField layoutX="748.0" layoutY="204.0" prefHeight="45.0" prefWidth="255.0" promptText="KATEGORI" AnchorPane.leftAnchor="695.0" AnchorPane.topAnchor="179.0" />
+                                <Button fx:id="createProduct" layoutX="25.0" layoutY="307.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="255.0" text="Rediger Produkt" />
+                                <Button fx:id="deleteProduct" layoutX="695.0" layoutY="238.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="255.0" text="Slet Produkt" AnchorPane.topAnchor="238.0" />
+                                <Button fx:id="changeProduct" layoutX="365.0" layoutY="238.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="255.0" text="Opret Produkt" AnchorPane.topAnchor="238.0" />
+                                <TextField layoutX="25.0" layoutY="252.0" prefHeight="45.0" prefWidth="255.0" promptText="NYT PRODUKT NAVN" />
+                            </children>
+                        </AnchorPane>
                     </content>
                 </Tab>
                 <Tab text="ADMIN MENU">
