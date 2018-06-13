@@ -54,7 +54,6 @@ public class UIController implements Initializable {
     public TextField refundCustomerName;
     public TextField currentRefundableBalance;
     public Button refundLatestProduct;
-    public Button refundAllProducts;
     public TextField deleteCustomerID;
     public TextField deleteCustomerName;
     public TableColumn productIdInPrductTable;
@@ -64,8 +63,14 @@ public class UIController implements Initializable {
     public TextField searchForProduct;
     public TableView productListTable;
     public ChoiceBox choosePrduct;
-    public Button getProductSearch;
     public Button cancleList;
+    public TableView customerListTable;
+    public TableColumn customerListTablePhone;
+    public TextField searchCustomer;
+    public ChoiceBox chooseSearchCustomer;
+    public TableColumn customerListTableFirstname;
+    public TableColumn customerListTableLastname;
+    public TableColumn customerListTableAddress;
 
     Product product1;
     Product product2 = new Product("Æbler", 100, new Company(1,"PF"));
