@@ -17,7 +17,10 @@ import rest.DTO.Category;
 import rest.DTO.Company;
 import rest.DTO.Product;
 import rest.implementations.CategoryClientImpl;
+import rest.implementations.ProductClientImpl;
 import rest.interfaces.CategoryClient;
+import rest.interfaces.ProductClient;
+
 import javax.swing.*;
 import javax.ws.rs.NotAuthorizedException;
 import java.net.URL;
@@ -64,7 +67,7 @@ public class UIController implements Initializable {
     public Button getProductSearch;
     public Button cancleList;
 
-    Product product1 = new Product("Bananer", 100, new Company(1,"PF"));
+    Product product1;
     Product product2 = new Product("Æbler", 100, new Company(1,"PF"));
     Product product3 = new Product("Citroner", 100, new Company(1,"PF"));
     List<Product> productArrayList1 = Arrays.asList(product1, product2);
@@ -76,13 +79,13 @@ public class UIController implements Initializable {
     private List<Product> allProducts = new ArrayList<>();
 
     private CategoryClient categoryClient = new CategoryClientImpl();
+    private ProductClient productClient = new ProductClientImpl();
     /*List<Category> categories = categoryClient.getAll();
     ObservableList<Product> obsTableList = FXCollections.observableArrayList(productList);
     private List<Product> allProducts = new ArrayList<>();*/
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("test");
 
         for (Category cat : categories) {
             for (Product p : cat.getProducts()) {
@@ -191,7 +194,6 @@ public class UIController implements Initializable {
     public void choosenCategory (Category category) {
         try {
             List<Category> newcategories = categoryClient.getAll();
-
         }
         catch (Exception e) {
             System.out.println(e);

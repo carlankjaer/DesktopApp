@@ -5,10 +5,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import rest.DTO.User;
+import rest.implementations.CustomerClientImpl;
+import rest.implementations.ProductClientImpl;
+import rest.interfaces.CustomerClient;
+import rest.interfaces.ProductClient;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static javafx.application.Application.launch;
 
 public class Main extends Application {
+    ProductClient productClient = new ProductClientImpl();
+    static CustomerClient customerClient = new CustomerClientImpl();
 
-    @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/login.fxml"));
         primaryStage.setTitle("Login");
@@ -21,6 +32,6 @@ public class Main extends Application {
     }
 
 
-    public static void main(String[] args) { launch(args); }
+    public static void main(String[] args) { launch(args); }}
+        //System.out.println(customerClient.getAll().get(0).getLastname());}
 
-}

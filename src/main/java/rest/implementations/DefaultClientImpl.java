@@ -1,5 +1,6 @@
 package rest.implementations;
 
+import rest.DTO.Customer;
 import rest.interfaces.DefaultClient;
 
 import javax.ws.rs.Consumes;
@@ -21,8 +22,12 @@ import java.util.List;
 public abstract class DefaultClientImpl<T> implements DefaultClient<T> {
     public static final String restService = "http://ec2-18-222-19-131.us-east-2.compute.amazonaws.com:8080/kreditsystem/api";
     private String servicePath;
-    public DefaultClientImpl(String servicePath) {
+    private Class<T> type;
+    private GenericType<List<T>> listType;
+    public DefaultClientImpl(String servicePath, Class<T> type, GenericType<List<T>> listType) {
         this.servicePath = servicePath;
+        this.type = type;
+        this.listType = listType;
     }
 
     @Override
@@ -31,7 +36,7 @@ public abstract class DefaultClientImpl<T> implements DefaultClient<T> {
         List<T> elements = client.target(restService)
                 .path(servicePath)
                 .request(MediaType.APPLICATION_JSON)
-                .get(new GenericType<List<T>>() {});
+                .get(listType);
         return elements;
     }
 
@@ -42,19 +47,19 @@ public abstract class DefaultClientImpl<T> implements DefaultClient<T> {
                 .path(servicePath)
                 .path(""+id)
                 .request(MediaType.APPLICATION_JSON)
-                .get(new GenericType<T>() {});
+                .get(type);
         return element;
     }
 
     @Override
     public T post(T element) {
-        Client client = ClientBuilder.newBuilder().register(new GenericType<T>() {}).build();
+        Client client = ClientBuilder.newBuilder().register(type).build();
         WebTarget target = client.target(restService)
                 .path(servicePath);
         Response response = target.request()
                 .accept(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(element, MediaType.APPLICATION_JSON));
-        return response.readEntity(new GenericType<T>() {});
+        return response.readEntity(type);
     }
 
     @Override
@@ -66,18 +71,18 @@ public abstract class DefaultClientImpl<T> implements DefaultClient<T> {
         Response response = target.request()
                 .accept(MediaType.APPLICATION_JSON)
                 .delete();
-        return response.readEntity(new GenericType<T>() {});
+        return response.readEntity(type);
     }
 
     @Override
     public T put(int id, T element) {
-        Client client = ClientBuilder.newBuilder().register(new GenericType<T>() {}).build();
+        Client client = ClientBuilder.newBuilder().register(type).build();
         WebTarget target = client.target(restService)
                 .path(servicePath)
                 .path(""+id);
         Response response = target.request()
                 .accept(MediaType.APPLICATION_JSON)
                 .put(Entity.entity(element, MediaType.APPLICATION_JSON));
-        return response.readEntity(new GenericType<T>() {});
+        return response.readEntity(type);
     }
 }
