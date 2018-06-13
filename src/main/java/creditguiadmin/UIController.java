@@ -30,7 +30,6 @@ public class UIController implements Initializable {
     public TableView productTable;
     public TableColumn productColumn;
     public List<Product> productList = new ArrayList<>();
-    public List<Customer> cuntList = new ArrayList<>();
     public Button payForChosenProducts;
     public TextField createCustomerFirstName;
     public TextField createCustomerLastName;
@@ -104,6 +103,8 @@ public class UIController implements Initializable {
                 obsTableList.add(p);
             }
         }
+
+
 
         productListTable.setEditable(false);
 
@@ -197,12 +198,12 @@ public class UIController implements Initializable {
         //Filters search after search key (ex. ID)
         //Filters customers when typing starts so the only customers that are shown in the table are the people who matches the search
         searchCustomer.setOnKeyReleased(keyEvent -> {
-            obsUserTableList.setAll(allCustomers);
+            obsUserTableList.setAll(obsUserTableList);
             if (chooseSearchCustomer.getValue().equals("ID")) {
-
+                obsUserTableList.removeIf(p -> !Integer.toString(p.getId()).contains(searchCustomer.getText().toLowerCase().trim()));
             }
             else if (chooseSearchCustomer.getValue().equals("Telefon nummer")) {
-
+                //obsUserTableList.removeIf(p -> !p.)
             }
             else if (chooseSearchCustomer.getValue().equals("Fornavn")) {
 

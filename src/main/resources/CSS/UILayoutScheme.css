@@ -26,8 +26,8 @@
 }
 
 .tab-pane {
-    -fx-tab-min-width:200px;
-    -fx-tab-max-width:200px;
+    -fx-tab-min-width:180px;
+    -fx-tab-max-width:180px;
     -fx-tab-min-height:50px;
     -fx-tab-max-height:50px;
 }
