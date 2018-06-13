@@ -141,7 +141,6 @@ public class UIController implements Initializable {
         productPriseInTable.setCellValueFactory(
                 new PropertyValueFactory<Product, Double>("price"));
 
-
         //Sets values on choice box and adds "Navn" as standard search key
         choosePrduct.getItems().addAll("Navn", "ID");
         choosePrduct.setValue("Navn");
