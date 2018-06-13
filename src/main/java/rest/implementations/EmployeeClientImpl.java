@@ -1,7 +1,5 @@
 package rest.implementations;
 
-import rest.DTO.Category;
-import rest.DTO.Employee;
 import rest.DTO.User;
 import rest.interfaces.EmployeeClient;
 
