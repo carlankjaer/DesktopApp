@@ -1,5 +1,7 @@
 package rest.implementations;
 
+import rest.DTO.LoginDetails;
+import rest.DTO.Role;
 import rest.interfaces.AuthenticationClient;
 
 import javax.ws.rs.client.Client;
