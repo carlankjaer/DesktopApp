@@ -69,6 +69,8 @@ public class UIController implements Initializable {
     public TableColumn customerListTableAddress;
     public TableColumn customerListTableUserID;
 
+    private CategoryClient categoryClient = new CategoryClientImpl();
+
     Product product1 = new Product("Bananer", 100);
     Product product2 = new Product("Æbler", 100);
     Product product3 = new Product("Citroner", 100);
@@ -76,7 +78,7 @@ public class UIController implements Initializable {
     List<Product> productArrayList2 = Arrays.asList(product3);
     Category category1 = new Category("Venstre", productArrayList1);
     Category category2 = new Category("Højre", productArrayList2);
-    List<Category> categories = Arrays.asList(category1, category2);
+    List<Category> categories = categoryClient.getAll();
     ObservableList<Product> obsTableList = FXCollections.observableArrayList(productList);
     private List<Product> allProducts = new ArrayList<>();
 
@@ -88,7 +90,6 @@ public class UIController implements Initializable {
     ObservableList<User> obsUserTableList = FXCollections.observableArrayList(users);
     private List<User> allUsers = new ArrayList<>();
 
-    private CategoryClient categoryClient = new CategoryClientImpl();
     private ProductClient productClient = new ProductClientImpl();
     /*List<Category> categories = categoryClient.getAll();
     ObservableList<Product> obsTableList = FXCollections.observableArrayList(productList);
