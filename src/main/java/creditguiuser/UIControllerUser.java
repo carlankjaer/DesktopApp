@@ -34,9 +34,6 @@ public class UIControllerUser implements Initializable {
     private List<Product> productList = new ArrayList<>();
     public Button payForChosenProducts;
     public Button createCustomerButton;
-    public TextField createUserID;
-    public CheckBox adminRights;
-    public Button createUserButton;
     public TableColumn productIdInPrductTable;
     public TableColumn productCategoryInTable;
     public TableColumn productNameInTable;
@@ -60,23 +57,12 @@ public class UIControllerUser implements Initializable {
     public TextField createCustomerPhonenumber;
     public TextField createCustomerAdress;
     public TextField createCustomerEmail;
-    public Button deleteCustomerButton;
-    public TextField deleteCustomerID;
     public Button refreachCustomerTableButton;
     public TextField orderCustomerTextfield;
     public TextField customerFundsAddTextfield;
     public Button customerFundsAddAmountButton;
     public TextField customerFundsAmountTextfield;
-    public TextField creatNewProductName;
-    public TextField deleteProductTextfield;
-    public TextField creatNewProductPrice;
-    public TextField createProduktCategoryName;
-    public Button deleteProductButton;
-    public Button createProductButton;
     public Button refreshProductsButton;
-    public TextField createUserPassword;
-    public TextField createUserLastname;
-    public TextField createUserFirstname;
 
     private CategoryClient categoryClient = new CategoryClientImpl();
     private List<Category> categories = categoryClient.getAll(); //Creates a list of all categories
