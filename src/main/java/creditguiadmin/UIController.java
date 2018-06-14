@@ -21,7 +21,6 @@ import rest.implementations.*;
 import rest.interfaces.*;
 
 import java.net.URL;
-import java.net.UnknownServiceException;
 import java.util.*;
 
 public class UIController implements Initializable {
@@ -31,7 +30,7 @@ public class UIController implements Initializable {
     public Button categoriesButton;
     public TableView productTable;
     public TableColumn productColumn;
-    public List<Product> productList = new ArrayList<>();
+    private List<Product> productList = new ArrayList<>();
     public Button payForChosenProducts;
     public Button createCustomerButton;
     public TextField createUserID;
@@ -119,7 +118,7 @@ public class UIController implements Initializable {
         public void handle(MouseEvent event) {
 
             Node node = event.getPickResult().getIntersectedNode();
-            Product product = null;
+            Product product;
             try{
                 product = (Product) ((TableCell) node).getTableRow().getItem();
             }catch (Exception e){
@@ -222,11 +221,7 @@ public class UIController implements Initializable {
                             }
                         }
                 );
-
-        deleteCustomerButton.setOnAction
-                (event -> productClient.delete(Integer.parseInt(deleteProductTextfield.getText())));
-
-
+        
         choosePrduct.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) ->
         {//reset table and textfield when new choice is selected
             if (newVal != null)
