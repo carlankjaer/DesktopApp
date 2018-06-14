@@ -39,15 +39,6 @@ public class UIController implements Initializable {
     public TableColumn productColumn;
     public List<Product> productList = new ArrayList<>();
     public Button payForChosenProducts;
-    public TextField createCustomerFirstName;
-    public TextField createCustomerLastName;
-    public TextField createCustomerAddress1;
-    public TextField createCustomerAddress1createCustomerAddress2;
-    public TextField createCustomerCity;
-    public TextField createCustomerZipCode;
-    public TextField createCustomerPhoneNumber;
-    public TextField createCustomerEmail;
-    public TextField createCustomerID;
     public Button createCustomerButton;
     public TextField createUserID;
     public TextField createUserPhoneNumber;
@@ -76,24 +67,20 @@ public class UIController implements Initializable {
     public TableColumn customerListTableLastname;
     public TableColumn customerListTableAddress;
     public TableColumn customerListTableUserID;
+    public TextField createCustomerUsername;
+    public TextField createCustomerPassword;
+    public TextField createCustomerFirstname;
+    public TextField createCustomerLastname;
+    public TextField createCustomerPhonenumber;
+    public TextField createCustomerAdress;
+    public TextField createCustomerEmail;
 
     private CategoryClient categoryClient = new CategoryClientImpl();
-    Product product1 = new Product("Bananer", 100);
-    Product product2 = new Product("Æbler", 100);
-    Product product3 = new Product("Citroner", 100);
-    List<Product> productArrayList1 = Arrays.asList(product1, product2);
-    List<Product> productArrayList2 = Arrays.asList(product3);
-    Category category1 = new Category("Venstre", productArrayList1);
-    Category category2 = new Category("Højre", productArrayList2);
     List<Category> categories = categoryClient.getAll();
     ObservableList<Product> obsTableList = FXCollections.observableArrayList(productList);
     private List<Product> allProducts = new ArrayList<>();
 
     CustomerClient customerClient = new CustomerClientImpl();
-    Customer customer1 = new Customer("27831230", "carlankjaer@gmail.com", "Teglgårdsvej 905, 2.tv");
-    Customer customer2 = new Customer("27831231", "ca@classichouse.dk", "Lillevangsvej 218");
-    User user1 = new User("carlankjaer", "ca190195", "Caroline", "Ankjær", customer1);
-    User user2 = new User("caroline_anders", "caro1901", "Carl", "Andersen", customer2);
     List<User> users = customerClient.getAll();
 
     ObservableList<User> obsUserTableList = FXCollections.observableArrayList(users);
@@ -171,10 +158,10 @@ public class UIController implements Initializable {
         });
 
         createCustomerButton.setOnAction(event -> customerClient.post(
-                new User(createCustomerFirstName.getText(), createCustomerLastName.getText(), createCustomerAddress1.getText(),
-                        createCustomerAddress1createCustomerAddress2.getText(),
-                        new Customer(createCustomerCity.getText(), createCustomerZipCode.getText(),
-                                createCustomerPhoneNumber.getText()
+                new User(createCustomerUsername.getText(), createCustomerPassword.getText(), createCustomerFirstname.getText(),
+                        createCustomerLastname.getText(),
+                        new Customer(createCustomerPhonenumber.getText(), createCustomerEmail.getText(),
+                                createCustomerAdress.getText()
                         )
                 )
         ));
@@ -282,7 +269,6 @@ public class UIController implements Initializable {
             else
                 grid.add(categoryButton, rowCounter, 2);
         }
-
     }
 
     public void choosenCategory (Category category) {
@@ -351,8 +337,6 @@ public class UIController implements Initializable {
             obsProductList.clear();
             productList.clear();
         });
-
-
     }
 
     public void itemToList(MouseEvent mouseEvent) {
