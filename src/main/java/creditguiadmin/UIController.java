@@ -219,26 +219,11 @@ public class UIController implements Initializable {
         // Creates a product
         createProductButton.setOnAction
                 (event -> {
-                            String categoryID = createProduktCategoryName.getText(); //Gets the written category ID from the text field
-                            boolean created = false;
-                            for (Category c : categories) {
-                                if (c.getId() == Integer.parseInt(categoryID)) {
-                                    /* If the ID number from the text field matches an ID from a category then it creates
-                                    * a new product from the information in the text fields */
-                                    Product p = new Product(
-                                            creatNewProductName.getText(),
-                                            Double.parseDouble
-                                                    (creatNewProductPrice.getText()));
-                                    c.addProduct(p);
-                                    created = true;
-                                    productClient.postProduct(p, Integer.parseInt(categoryID));
-                                }
-                            }
-                            if (!created){
-                                System.out.println("Category does not exist!");
-                            }
-                        }
-                );
+                    Product p = new Product(creatNewProductName.getText(),
+                            Double.parseDouble(creatNewProductPrice.getText()));
+                    productClient.postProduct( p ,Integer.parseInt(createProduktCategoryName.getText()));
+                });
+        
         deleteProductButton.setOnAction
                 (event -> productClient.delete(Integer.parseInt(deleteProductTextfield.getText())));
         //Adds a listener to the choice box
