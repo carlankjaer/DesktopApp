@@ -173,7 +173,11 @@ public class UIController implements Initializable {
         createCustomerButton.setOnAction(event -> customerClient.post(
                 new User(createCustomerFirstName.getText(), createCustomerLastName.getText(), createCustomerAddress1.getText(),
                         createCustomerAddress1createCustomerAddress2.getText(),
-                        new Customer("61868607", "idk@gmail.com", "hallo"))));
+                        new Customer(createCustomerCity.getText(), createCustomerZipCode.getText(),
+                                createCustomerPhoneNumber.getText()
+                        )
+                )
+        ));
 
         choosePrduct.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) ->
         {//reset table and textfield when new choice is selected
