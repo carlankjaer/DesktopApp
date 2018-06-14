@@ -1,5 +1,6 @@
 package rest.implementations;
 
+import rest.DTO.JWT;
 import rest.interfaces.DefaultClient;
 
 import javax.ws.rs.Consumes;
@@ -9,6 +10,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -35,6 +37,8 @@ public abstract class DefaultClientImpl<T> implements DefaultClient<T> {
         List<T> elements = client.target(restService)
                 .path(servicePath)
                 .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer "+JWT.getInstance().getToken())
+                .accept(MediaType.APPLICATION_JSON)
                 .get(listType);
         return elements;
     }
@@ -46,6 +50,8 @@ public abstract class DefaultClientImpl<T> implements DefaultClient<T> {
                 .path(servicePath)
                 .path(""+id)
                 .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer "+JWT.getInstance().getToken())
+                .accept(MediaType.APPLICATION_JSON)
                 .get(type);
         return element;
     }
@@ -56,6 +62,7 @@ public abstract class DefaultClientImpl<T> implements DefaultClient<T> {
         WebTarget target = client.target(restService)
                 .path(servicePath);
         Response response = target.request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer "+JWT.getInstance().getToken())
                 .accept(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(element, MediaType.APPLICATION_JSON));
         return response.readEntity(type);
@@ -67,7 +74,8 @@ public abstract class DefaultClientImpl<T> implements DefaultClient<T> {
         WebTarget target = client.target(restService)
                 .path(servicePath)
                 .path(""+id);
-        Response response = target.request()
+        Response response = target.request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer "+JWT.getInstance().getToken())
                 .accept(MediaType.APPLICATION_JSON)
                 .delete();
         return response.readEntity(type);
@@ -79,7 +87,8 @@ public abstract class DefaultClientImpl<T> implements DefaultClient<T> {
         WebTarget target = client.target(restService)
                 .path(servicePath)
                 .path(""+id);
-        Response response = target.request()
+        Response response = target.request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer "+ JWT.getInstance().getToken())
                 .accept(MediaType.APPLICATION_JSON)
                 .put(Entity.entity(element, MediaType.APPLICATION_JSON));
         return response.readEntity(type);

@@ -28,11 +28,11 @@ public class Controller {
     {
 
         try {
-            /*String jwt = authenticationClient.login(new LoginDetails(userID.getText(), passwordID.getText()));
+            String jwt = authenticationClient.login(new LoginDetails(userID.getText(), passwordID.getText()));
             JWT.getInstance().setToken(jwt);
-            Role role = authenticationClient.getRole();*/
+            Role role = authenticationClient.getRole();
 
-            //if (role.equals(Role.ADMIN)) {
+            if (role.equals(Role.ADMIN)) {
                 Parent root;
                 try
                 {
@@ -58,9 +58,9 @@ public class Controller {
                     System.out.println(e);
 
                 }
-           // }
+            }
 
-            /*else if (role.equals(Role.EMPLOYEE)) {
+            else if (role.equals(Role.EMPLOYEE)) {
                 Parent root;
                 try
                 {
@@ -103,7 +103,7 @@ public class Controller {
                 alert.setContentText("Error.");
 
                 alert.showAndWait();
-            }*/
+            }
 
         }
         catch (Exception e) {

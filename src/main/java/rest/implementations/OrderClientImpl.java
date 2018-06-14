@@ -1,5 +1,6 @@
 package rest.implementations;
 
+import rest.DTO.JWT;
 import rest.DTO.Order;
 import rest.DTO.OrderRequest;
 import rest.DTO.Status;
@@ -12,6 +13,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -27,6 +29,7 @@ public class OrderClientImpl implements OrderClient {
         WebTarget target = client.target(DefaultClientImpl.restService)
                 .path(servicePath);
         Response response = target.request()
+                .header(HttpHeaders.AUTHORIZATION, "Bearer "+ JWT.getInstance().getToken())
                 .accept(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(orderRequest, MediaType.APPLICATION_JSON));
         return response.readEntity(Order.class);
@@ -49,6 +52,8 @@ public class OrderClientImpl implements OrderClient {
                 .path(servicePath+"/customer")
                 .path(""+userid)
                 .request(MediaType.APPLICATION_JSON)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer "+ JWT.getInstance().getToken())
+                .accept(MediaType.APPLICATION_JSON)
                 .get(new GenericType<List<Order>>() {});
         return orders;
     }
@@ -59,6 +64,7 @@ public class OrderClientImpl implements OrderClient {
         WebTarget target = client.target(DefaultClientImpl.restService)
                 .path(servicePath);
         Response response = target.request()
+                .header(HttpHeaders.AUTHORIZATION, "Bearer "+ JWT.getInstance().getToken())
                 .accept(MediaType.APPLICATION_JSON)
                 .put(Entity.entity(status, MediaType.APPLICATION_JSON));
         return response.readEntity(Order.class);
@@ -71,6 +77,7 @@ public class OrderClientImpl implements OrderClient {
                 .path(servicePath+"/refund")
                 .path(""+id);
         Response response = target.request()
+                .header(HttpHeaders.AUTHORIZATION, "Bearer "+ JWT.getInstance().getToken())
                 .accept(MediaType.APPLICATION_JSON)
                 .post(null);
         return response.readEntity(Order.class);
