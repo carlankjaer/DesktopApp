@@ -78,6 +78,7 @@ public class UIController implements Initializable {
     public Button deleteCustomerButton;
     public TextField deleteCustomerID;
     public TextField deleteCustomerPhonenumber;
+    public Button refreachCustomerTableButton;
 
     private CategoryClient categoryClient = new CategoryClientImpl();
     List<Category> categories = categoryClient.getAll();
@@ -85,17 +86,20 @@ public class UIController implements Initializable {
     private List<Product> allProducts = new ArrayList<>();
 
     CustomerClient customerClient = new CustomerClientImpl();
-    List<User> users = customerClient.getAll();
+    List<User> users = new ArrayList<>();
 
     ObservableList<User> obsUserTableList = FXCollections.observableArrayList(users);
 
     private ProductClient productClient = new ProductClientImpl();
-    /*List<Category> categories = categoryClient.getAll();
-    ObservableList<Product> obsTableList = FXCollections.observableArrayList(productList);
-    private List<Product> allProducts = new ArrayList<>();*/
+
+    private void refreshView(){
+        List<User> all = customerClient.getAll();
+        obsUserTableList.setAll(all);
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        refreshView();
         for (Category cat : categories) {
             for (Product p : cat.getProducts()) {
                 allProducts.add(p);
@@ -220,6 +224,8 @@ public class UIController implements Initializable {
                     }
                 }
         );
+
+        refreachCustomerTableButton.setOnAction(event -> refreshView());
 
         //Sets values on choice box and adds ID as standard search key
         chooseSearchCustomer.getItems().addAll("ID", "Telefon nummer", "Fornavn", "Efternavn", "Addresse");
