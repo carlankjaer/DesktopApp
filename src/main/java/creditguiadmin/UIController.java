@@ -20,6 +20,7 @@ import rest.interfaces.CategoryClient;
 import rest.interfaces.ProductClient;
 
 import java.net.URL;
+import java.net.UnknownServiceException;
 import java.util.*;
 
 public class UIController implements Initializable {
@@ -88,7 +89,6 @@ public class UIController implements Initializable {
     User user2 = new User("caroline_anders", "caro1901", "Carl", "Andersen", customer2);
     List<User> users = Arrays.asList(user1, user2);
     ObservableList<User> obsUserTableList = FXCollections.observableArrayList(users);
-    private List<User> allUsers = new ArrayList<>();
 
     private ProductClient productClient = new ProductClientImpl();
     /*List<Category> categories = categoryClient.getAll();
@@ -170,7 +170,7 @@ public class UIController implements Initializable {
         });
 
         //Creates filtered list with customer
-        FilteredList<Customer> flCustomer = new FilteredList(obsUserTableList, p -> true);
+        FilteredList<User> flCustomer = new FilteredList(obsUserTableList, p -> true);
 
         customerListTable.getColumns();
         customerListTable.setItems(obsUserTableList);
@@ -196,7 +196,7 @@ public class UIController implements Initializable {
         //Filters search after search key (ex. ID)
         //Filters customers when typing starts so the only customers that are shown in the table are the people who matches the search
         searchCustomer.setOnKeyReleased(keyEvent -> {
-            obsUserTableList.setAll(obsUserTableList);
+            obsUserTableList.setAll(users);
             if (chooseSearchCustomer.getValue().equals("ID")) {
                 obsUserTableList.removeIf(p -> !Integer.toString(p.getId()).contains(searchCustomer.getText().toLowerCase().trim()));
             }
