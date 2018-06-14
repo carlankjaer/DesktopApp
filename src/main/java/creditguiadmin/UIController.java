@@ -21,9 +21,11 @@ import javafx.util.Callback;
 import rest.DTO.*;
 import rest.implementations.CategoryClientImpl;
 import rest.implementations.CustomerClientImpl;
+import rest.implementations.OrderClientImpl;
 import rest.implementations.ProductClientImpl;
 import rest.interfaces.CategoryClient;
 import rest.interfaces.CustomerClient;
+import rest.interfaces.OrderClient;
 import rest.interfaces.ProductClient;
 
 import java.net.URL;
@@ -45,10 +47,6 @@ public class UIController implements Initializable {
     public TextField createUserName;
     public CheckBox adminRights;
     public Button createUserButton;
-    public TextField refundCustomerID;
-    public TextField refundCustomerName;
-    public TextField currentRefundableBalance;
-    public Button refundLatestProduct;
     public TableColumn productIdInPrductTable;
     public TableColumn productCategoryInTable;
     public TableColumn productNameInTable;
@@ -72,13 +70,24 @@ public class UIController implements Initializable {
     public TextField createCustomerPhonenumber;
     public TextField createCustomerAdress;
     public TextField createCustomerEmail;
-    public Button createProduct;
-    public Button deleteProduct;
-    public Button changeProduct;
     public Button deleteCustomerButton;
     public TextField deleteCustomerID;
-    public TextField deleteCustomerPhonenumber;
     public Button refreachCustomerTableButton;
+    public TextField orderCustomerTextfield;
+    public TextField customerFundsAddTextfield;
+    public Button customerFundsAddAmountButton;
+    public TextField customerFundsAmountTextfield;
+    public TextField updateProductId;
+    public TextField creatNewProductName;
+    public TextField deleteProductTextfield;
+    public TextField creatNewProductPrice;
+    public TextField createProduktCategoryName;
+    public Button updateProductButton;
+    public Button deleteProductButton;
+    public Button createProductButton;
+    public TextField updateSetNewProductName;
+    public TextField updateSetNewProductPrice;
+    public Button refreshProductsButton;
 
     private CategoryClient categoryClient = new CategoryClientImpl();
     List<Category> categories = categoryClient.getAll();
@@ -86,6 +95,7 @@ public class UIController implements Initializable {
     private List<Product> allProducts = new ArrayList<>();
 
     CustomerClient customerClient = new CustomerClientImpl();
+    OrderClient orderClient = new OrderClientImpl();
     List<User> users = new ArrayList<>();
 
     ObservableList<User> obsUserTableList = FXCollections.observableArrayList(users);
@@ -96,10 +106,15 @@ public class UIController implements Initializable {
         List<User> all = customerClient.getAll();
         obsUserTableList.setAll(all);
     }
+    private void refreshViewProduct(){
+        List<Product> all = productClient.getAll();
+        obsTableList.setAll(all);
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         refreshView();
+        //refreshViewProduct();
         for (Category cat : categories) {
             for (Product p : cat.getProducts()) {
                 allProducts.add(p);
@@ -180,6 +195,33 @@ public class UIController implements Initializable {
                         ))
                 );
 
+        payForChosenProducts.setOnAction
+                (event -> orderClient.addOrder
+                        (new OrderRequest(Integer.parseInt
+                                (orderCustomerTextfield.getText()), 1, productList)
+                        )
+                );
+
+        createProductButton.setOnAction
+                (event -> {
+                            String categoryID = createProduktCategoryName.getText();
+                            boolean created = false;
+                            for (Category c : categories) {
+                                if (c.getId() == Integer.parseInt(categoryID)) {
+                                    Product p = new Product(
+                                            creatNewProductName.getText(),
+                                            Double.parseDouble
+                                                    (creatNewProductPrice.getText()));
+                                    c.addProduct(p);
+                                    created = true;
+                                    productClient.post(p);
+                                }
+                            }
+                            if (!created){
+                                System.out.println("Category does not exist!");
+                            }
+                        }
+                );
 
 
         choosePrduct.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) ->
@@ -224,7 +266,7 @@ public class UIController implements Initializable {
                     }
                 }
         );
-
+        refreshProductsButton.setOnAction(event -> refreshViewProduct());
         refreachCustomerTableButton.setOnAction(event -> refreshView());
 
         //Sets values on choice box and adds ID as standard search key
