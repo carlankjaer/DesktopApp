@@ -5,6 +5,8 @@ import rest.DTO.LoginDetails;
 import rest.DTO.Role;
 import rest.interfaces.AuthenticationClient;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Produces;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -16,6 +18,9 @@ import javax.ws.rs.core.Response;
 /**
  * Created by magnus
  */
+
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class AuthenticationClientImpl implements AuthenticationClient{
     private static final String servicePath = "authentication";
 
@@ -34,8 +39,8 @@ public class AuthenticationClientImpl implements AuthenticationClient{
     public Role getRole() {
         Client client = ClientBuilder.newBuilder().register(Role.class).build();
         WebTarget target = client.target(DefaultClientImpl.restService)
-                .path(servicePath);
-        Response response = target.request()
+                .path(servicePath+"/role");
+        Response response = target.request(MediaType.APPLICATION_JSON)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer "+JWT.getInstance().getToken())
                 .accept(MediaType.APPLICATION_JSON)
                 .get();
