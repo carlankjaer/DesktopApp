@@ -53,7 +53,8 @@ public class Controller {
             try
             {
 
-                root = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/creditGUIuser.fxml"));
+                root = FXMLLoader.load(getClass().getClassLoader().
+                        getResource("fxml/creditGUIuser.fxml"));
                 Stage home = new Stage();
                 home.setTitle("Credit GUI");
                 home.setScene(new Scene(root, 1031.0, 800.0));
