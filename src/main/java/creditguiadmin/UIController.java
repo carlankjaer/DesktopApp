@@ -81,15 +81,15 @@ public class UIController implements Initializable {
     public TextField createUserFirstname;
 
     private CategoryClient categoryClient = new CategoryClientImpl();
-    List<Category> categories = categoryClient.getAll();
-    ObservableList<Product> obsTableList = FXCollections.observableArrayList(productList);
+    private List<Category> categories = categoryClient.getAll();
+    private ObservableList<Product> obsTableList = FXCollections.observableArrayList(productList);
     private List<Product> allProducts = new ArrayList<>();
 
-    CustomerClient customerClient = new CustomerClientImpl();
-    OrderClient orderClient = new OrderClientImpl();
-    List<User> users = new ArrayList<>();
+    private CustomerClient customerClient = new CustomerClientImpl();
+    private OrderClient orderClient = new OrderClientImpl();
+    private List<User> users = new ArrayList<>();
 
-    ObservableList<User> obsUserTableList = FXCollections.observableArrayList(users);
+    private ObservableList<User> obsUserTableList = FXCollections.observableArrayList(users);
     private EmployeeClient employeeClient = new EmployeeClientImpl();
     private ProductClient productClient = new ProductClientImpl();
 
@@ -105,7 +105,7 @@ public class UIController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         refreshView();
-        //refreshViewProduct();
+        refreshViewProduct();
         for (Category cat : categories) {
             for (Product p : cat.getProducts()) {
                 allProducts.add(p);

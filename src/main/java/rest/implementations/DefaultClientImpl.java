@@ -55,7 +55,7 @@ public abstract class DefaultClientImpl<T> implements DefaultClient<T> {
         Client client = ClientBuilder.newBuilder().register(type).build();
         WebTarget target = client.target(restService)
                 .path(servicePath);
-        Response response = target.request()
+        Response response = target.request(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(element, MediaType.APPLICATION_JSON));
         return response.readEntity(type);
