@@ -221,7 +221,7 @@ public class UIController implements Initializable {
                             }
                         }
                 );
-        
+
         choosePrduct.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) ->
         {//reset table and textfield when new choice is selected
             if (newVal != null)
@@ -323,7 +323,7 @@ public class UIController implements Initializable {
         }
     }
 
-    public void choosenCategory (Category category) {
+    private void choosenCategory(Category category) {
         try {
             List<Category> newcategories = categoryClient.getAll();
         }
@@ -375,7 +375,7 @@ public class UIController implements Initializable {
         }
     }
 
-    public void addToProductList(Product product) {
+    private void addToProductList(Product product) {
 
         productList.add(product);
 
