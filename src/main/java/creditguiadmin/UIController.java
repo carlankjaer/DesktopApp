@@ -1,8 +1,6 @@
 package creditguiadmin;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableStringValue;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,15 +17,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
 import rest.DTO.*;
-import rest.implementations.CategoryClientImpl;
-import rest.implementations.CustomerClientImpl;
-import rest.implementations.ProductClientImpl;
-import rest.interfaces.CategoryClient;
-import rest.interfaces.CustomerClient;
-import rest.interfaces.ProductClient;
+import rest.implementations.*;
+import rest.interfaces.*;
 
 import java.net.URL;
-import java.net.UnknownServiceException;
 import java.util.*;
 
 public class UIController implements Initializable {
@@ -37,18 +30,12 @@ public class UIController implements Initializable {
     public Button categoriesButton;
     public TableView productTable;
     public TableColumn productColumn;
-    public List<Product> productList = new ArrayList<>();
+    private List<Product> productList = new ArrayList<>();
     public Button payForChosenProducts;
     public Button createCustomerButton;
     public TextField createUserID;
-    public TextField createUserPhoneNumber;
-    public TextField createUserName;
     public CheckBox adminRights;
     public Button createUserButton;
-    public TextField refundCustomerID;
-    public TextField refundCustomerName;
-    public TextField currentRefundableBalance;
-    public Button refundLatestProduct;
     public TableColumn productIdInPrductTable;
     public TableColumn productCategoryInTable;
     public TableColumn productNameInTable;
@@ -72,34 +59,50 @@ public class UIController implements Initializable {
     public TextField createCustomerPhonenumber;
     public TextField createCustomerAdress;
     public TextField createCustomerEmail;
-    public Button createProduct;
-    public Button deleteProduct;
-    public Button changeProduct;
     public Button deleteCustomerButton;
     public TextField deleteCustomerID;
-    public TextField deleteCustomerPhonenumber;
     public Button refreachCustomerTableButton;
+    public TextField orderCustomerTextfield;
+    public TextField customerFundsAddTextfield;
+    public Button customerFundsAddAmountButton;
+    public TextField customerFundsAmountTextfield;
+    public TextField creatNewProductName;
+    public TextField deleteProductTextfield;
+    public TextField creatNewProductPrice;
+    public TextField createProduktCategoryName;
+    public Button deleteProductButton;
+    public Button createProductButton;
+    public Button refreshProductsButton;
+    public TextField createUserPassword;
+    public TextField createUserLastname;
+    public TextField createUserFirstname;
 
     private CategoryClient categoryClient = new CategoryClientImpl();
-    List<Category> categories = categoryClient.getAll();
-    ObservableList<Product> obsTableList = FXCollections.observableArrayList(productList);
+    private List<Category> categories = categoryClient.getAll();
+    private ObservableList<Product> obsTableList = FXCollections.observableArrayList(productList);
     private List<Product> allProducts = new ArrayList<>();
 
-    CustomerClient customerClient = new CustomerClientImpl();
-    List<User> users = new ArrayList<>();
+    private CustomerClient customerClient = new CustomerClientImpl();
+    private OrderClient orderClient = new OrderClientImpl();
+    private List<User> users = new ArrayList<>();
 
-    ObservableList<User> obsUserTableList = FXCollections.observableArrayList(users);
-
+    private ObservableList<User> obsUserTableList = FXCollections.observableArrayList(users);
+    private EmployeeClient employeeClient = new EmployeeClientImpl();
     private ProductClient productClient = new ProductClientImpl();
 
     private void refreshView(){
         List<User> all = customerClient.getAll();
         obsUserTableList.setAll(all);
     }
+    private void refreshViewProduct(){
+        List<Product> all = productClient.getAll();
+        obsTableList.setAll(all);
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         refreshView();
+        refreshViewProduct();
         for (Category cat : categories) {
             for (Product p : cat.getProducts()) {
                 allProducts.add(p);
@@ -115,7 +118,7 @@ public class UIController implements Initializable {
         public void handle(MouseEvent event) {
 
             Node node = event.getPickResult().getIntersectedNode();
-            Product product = null;
+            Product product;
             try{
                 product = (Product) ((TableCell) node).getTableRow().getItem();
             }catch (Exception e){
@@ -165,6 +168,17 @@ public class UIController implements Initializable {
             }
         });
 
+        createUserButton.setOnAction(event -> {
+            if (adminRights.isSelected()){
+                employeeClient.post(
+                        new User(createUserID.getText(), createUserPassword.getText(),createUserFirstname.getText(),createUserLastname.getText(),true));
+                }else{
+                employeeClient.post(
+                        new User(createUserID.getText(), createUserPassword.getText(),createUserFirstname.getText(),createUserLastname.getText(),false));
+                }
+            }
+        );
+
         createCustomerButton.setOnAction(event -> customerClient.post(
                 new User(createCustomerUsername.getText(), createCustomerPassword.getText(), createCustomerFirstname.getText(),
                         createCustomerLastname.getText(),
@@ -180,7 +194,33 @@ public class UIController implements Initializable {
                         ))
                 );
 
+        payForChosenProducts.setOnAction
+                (event -> orderClient.addOrder
+                        (new OrderRequest(Integer.parseInt
+                                (orderCustomerTextfield.getText()), 1, productList)
+                        )
+                );
 
+        createProductButton.setOnAction
+                (event -> {
+                            String categoryID = createProduktCategoryName.getText();
+                            boolean created = false;
+                            for (Category c : categories) {
+                                if (c.getId() == Integer.parseInt(categoryID)) {
+                                    Product p = new Product(
+                                            creatNewProductName.getText(),
+                                            Double.parseDouble
+                                                    (creatNewProductPrice.getText()));
+                                    c.addProduct(p);
+                                    created = true;
+                                    productClient.post(p);
+                                }
+                            }
+                            if (!created){
+                                System.out.println("Category does not exist!");
+                            }
+                        }
+                );
 
         choosePrduct.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) ->
         {//reset table and textfield when new choice is selected
@@ -224,11 +264,11 @@ public class UIController implements Initializable {
                     }
                 }
         );
-
+        refreshProductsButton.setOnAction(event -> refreshViewProduct());
         refreachCustomerTableButton.setOnAction(event -> refreshView());
 
         //Sets values on choice box and adds ID as standard search key
-        chooseSearchCustomer.getItems().addAll("ID", "Telefon nummer", "Fornavn", "Efternavn", "Addresse");
+        chooseSearchCustomer.getItems().addAll("ID", "Fornavn", "Efternavn");
         chooseSearchCustomer.setValue("ID");
 
         //Filters search after search key (ex. ID)
@@ -238,17 +278,11 @@ public class UIController implements Initializable {
             if (chooseSearchCustomer.getValue().equals("ID")) {
                 obsUserTableList.removeIf(p -> !Integer.toString(p.getId()).contains(searchCustomer.getText().toLowerCase().trim()));
             }
-            else if (chooseSearchCustomer.getValue().equals("Telefon nummer")) {
-                //obsUserTableList.removeIf(p -> !p.getFirstname().toLowerCase().contains(searchCustomer.getText().toLowerCase().trim()));
-            }
             else if (chooseSearchCustomer.getValue().equals("Fornavn")) {
                 obsUserTableList.removeIf(p -> !p.getFirstname().toLowerCase().contains(searchCustomer.getText().toLowerCase().trim()));
             }
             else if (chooseSearchCustomer.getValue().equals("Efternavn")) {
                 obsUserTableList.removeIf(p -> !p.getLastname().toLowerCase().contains(searchCustomer.getText().toLowerCase().trim()));
-            }
-            else if (chooseSearchCustomer.getValue().equals("Adresse")) {
-                //obsUserTableList.removeIf(p -> !p.getCustomer().toLowerCase().contains(searchCustomer.getText().toLowerCase().trim()));
             }
         });
 
@@ -289,7 +323,7 @@ public class UIController implements Initializable {
         }
     }
 
-    public void choosenCategory (Category category) {
+    private void choosenCategory(Category category) {
         try {
             List<Category> newcategories = categoryClient.getAll();
         }
@@ -341,7 +375,7 @@ public class UIController implements Initializable {
         }
     }
 
-    public void addToProductList(Product product) {
+    private void addToProductList(Product product) {
 
         productList.add(product);
 

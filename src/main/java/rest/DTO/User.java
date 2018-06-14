@@ -45,7 +45,7 @@ public class User {
         this.role = Role.EMPLOYEE;
     }
 
-    public User (String username, String password, String firstname, String lastname, boolean admin) {
+    public User(String username, String password, String firstname, String lastname, boolean admin) {
         this.id = counter;
         counter++;
         this.username = username;
