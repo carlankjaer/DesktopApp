@@ -73,7 +73,6 @@ public class UIController implements Initializable {
     public TableColumn customerListTableUserID;
 
     private CategoryClient categoryClient = new CategoryClientImpl();
-    CustomerClient customerClient = new CustomerClientImpl();
     Product product1 = new Product("Bananer", 100);
     Product product2 = new Product("Æbler", 100);
     Product product3 = new Product("Citroner", 100);
@@ -85,11 +84,13 @@ public class UIController implements Initializable {
     ObservableList<Product> obsTableList = FXCollections.observableArrayList(productList);
     private List<Product> allProducts = new ArrayList<>();
 
+    CustomerClient customerClient = new CustomerClientImpl();
     Customer customer1 = new Customer("27831230", "carlankjaer@gmail.com", "Teglgårdsvej 905, 2.tv");
     Customer customer2 = new Customer("27831231", "ca@classichouse.dk", "Lillevangsvej 218");
     User user1 = new User("carlankjaer", "ca190195", "Caroline", "Ankjær", customer1);
     User user2 = new User("caroline_anders", "caro1901", "Carl", "Andersen", customer2);
-    List<User> users = Arrays.asList(user1, user2);
+    List<User> users = customerClient.getAll();
+
     ObservableList<User> obsUserTableList = FXCollections.observableArrayList(users);
 
     private ProductClient productClient = new ProductClientImpl();
@@ -99,7 +100,6 @@ public class UIController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         for (Category cat : categories) {
             for (Product p : cat.getProducts()) {
                 allProducts.add(p);
@@ -145,7 +145,7 @@ public class UIController implements Initializable {
                 new PropertyValueFactory<Product, Double>("price"));
 
         //Sets values on choice box and adds "Navn" as standard search key
-        choosePrduct.getItems().addAll("Navn", "ID");
+        choosePrduct.getItems().addAll("Navn", "ID","Pris");
         choosePrduct.setValue("Navn");
 
         //Filters search after search key (ex. "Navn")
@@ -155,6 +155,9 @@ public class UIController implements Initializable {
             obsTableList.setAll(allProducts);
             if (choosePrduct.getValue().equals("Navn")) {
                 obsTableList.removeIf(p -> !p.getName().toLowerCase().contains(searchForProduct.getText().toLowerCase().trim()));
+            }
+            else if (choosePrduct.getValue().equals("Pris")) {
+                obsTableList.removeIf(p -> !Double.toString(p.getPrice()).contains(searchForProduct.getText().toLowerCase().trim()));
             }
             else if (choosePrduct.getValue().equals("ID"))
             {
@@ -182,19 +185,19 @@ public class UIController implements Initializable {
         customerListTable.getColumns();
         customerListTable.setItems(obsUserTableList);
         customerListTableUserID.setCellValueFactory(
-                new PropertyValueFactory<Customer, Integer>("id"));
+                new PropertyValueFactory<User, Integer>("id"));
 
         customerListTablePhone.setCellValueFactory(
-                new PropertyValueFactory<Customer, String>("phonenumber"));
+                new PropertyValueFactory<User, String>("phonenumber"));
 
         customerListTableFirstname.setCellValueFactory(
-                new PropertyValueFactory<Customer, String>("firstname"));
+                new PropertyValueFactory<User, String>("firstname"));
 
         customerListTableLastname.setCellValueFactory(
-                new PropertyValueFactory<Customer, String>("lastname"));
+                new PropertyValueFactory<User, String>("lastname"));
 
         customerListTableAddress.setCellValueFactory(
-                new PropertyValueFactory<Customer, String>("address"));
+                new PropertyValueFactory<User, String>("address"));
 
         //Sets values on choice box and adds ID as standard search key
         chooseSearchCustomer.getItems().addAll("ID", "Telefon nummer", "Fornavn", "Efternavn", "Addresse");
@@ -208,16 +211,16 @@ public class UIController implements Initializable {
                 obsUserTableList.removeIf(p -> !Integer.toString(p.getId()).contains(searchCustomer.getText().toLowerCase().trim()));
             }
             else if (chooseSearchCustomer.getValue().equals("Telefon nummer")) {
-                //obsUserTableList.removeIf(p -> !p.)
+                //obsUserTableList.removeIf(p -> !p.getFirstname().toLowerCase().contains(searchCustomer.getText().toLowerCase().trim()));
             }
             else if (chooseSearchCustomer.getValue().equals("Fornavn")) {
-
+                obsUserTableList.removeIf(p -> !p.getFirstname().toLowerCase().contains(searchCustomer.getText().toLowerCase().trim()));
             }
             else if (chooseSearchCustomer.getValue().equals("Efternavn")) {
-
+                obsUserTableList.removeIf(p -> !p.getLastname().toLowerCase().contains(searchCustomer.getText().toLowerCase().trim()));
             }
             else if (chooseSearchCustomer.getValue().equals("Adresse")) {
-
+                //obsUserTableList.removeIf(p -> !p.getCustomer().toLowerCase().contains(searchCustomer.getText().toLowerCase().trim()));
             }
         });
 
