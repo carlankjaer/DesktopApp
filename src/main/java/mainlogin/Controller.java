@@ -19,8 +19,6 @@ import java.io.IOException;
 
 public class Controller {
 
-    public static String[] userAdmin = {"1", "1"};
-    public static String[] userUser = {"2", "2"};
     public TextField userID;
     public PasswordField passwordID;
     private AuthenticationClient authenticationClient = new AuthenticationClientImpl();

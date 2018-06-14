@@ -32,11 +32,12 @@ public class AuthenticationClientImpl implements AuthenticationClient{
 
     @Override
     public Role getRole() {
-        Client client = ClientBuilder.newBuilder().register(String.class).build();
+        Client client = ClientBuilder.newBuilder().register(Role.class).build();
         WebTarget target = client.target(DefaultClientImpl.restService)
                 .path(servicePath);
         Response response = target.request()
                 .header(HttpHeaders.AUTHORIZATION, "Bearer "+JWT.getInstance().getToken())
+                .accept(MediaType.APPLICATION_JSON)
                 .get();
         return response.readEntity(Role.class);
     }
