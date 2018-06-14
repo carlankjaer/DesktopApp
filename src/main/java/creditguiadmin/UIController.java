@@ -171,6 +171,14 @@ public class UIController implements Initializable {
                 )
         ));
 
+        deleteCustomerButton.setOnAction
+                (event -> customerClient.delete
+                        (Integer.parseInt(deleteCustomerID.getText()
+                        ))
+                );
+
+
+
         choosePrduct.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) ->
         {//reset table and textfield when new choice is selected
             if (newVal != null)
