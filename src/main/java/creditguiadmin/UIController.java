@@ -21,9 +21,11 @@ import javafx.util.Callback;
 import rest.DTO.*;
 import rest.implementations.CategoryClientImpl;
 import rest.implementations.CustomerClientImpl;
+import rest.implementations.OrderClientImpl;
 import rest.implementations.ProductClientImpl;
 import rest.interfaces.CategoryClient;
 import rest.interfaces.CustomerClient;
+import rest.interfaces.OrderClient;
 import rest.interfaces.ProductClient;
 
 import java.net.URL;
@@ -79,6 +81,7 @@ public class UIController implements Initializable {
     public TextField deleteCustomerID;
     public TextField deleteCustomerPhonenumber;
     public Button refreachCustomerTableButton;
+    public TextField orderCustomerTextfield;
 
     private CategoryClient categoryClient = new CategoryClientImpl();
     List<Category> categories = categoryClient.getAll();
@@ -86,6 +89,7 @@ public class UIController implements Initializable {
     private List<Product> allProducts = new ArrayList<>();
 
     CustomerClient customerClient = new CustomerClientImpl();
+    OrderClient orderClient = new OrderClientImpl();
     List<User> users = new ArrayList<>();
 
     ObservableList<User> obsUserTableList = FXCollections.observableArrayList(users);
@@ -179,7 +183,14 @@ public class UIController implements Initializable {
                         (Integer.parseInt(deleteCustomerID.getText()
                         ))
                 );
+        payForChosenProducts.setOnAction
+                (event -> orderClient.addOrder
+                        (new OrderRequest(Integer.parseInt
+                                (orderCustomerTextfield.getText()), 1, productList)
+                        )
+                );
 
+        
 
 
         choosePrduct.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) ->
