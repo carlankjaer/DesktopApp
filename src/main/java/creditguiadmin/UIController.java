@@ -15,8 +15,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import rest.DTO.*;
 import rest.implementations.CategoryClientImpl;
+import rest.implementations.CustomerClientImpl;
 import rest.implementations.ProductClientImpl;
 import rest.interfaces.CategoryClient;
+import rest.interfaces.CustomerClient;
 import rest.interfaces.ProductClient;
 
 import java.net.URL;
@@ -71,7 +73,7 @@ public class UIController implements Initializable {
     public TableColumn customerListTableUserID;
 
     private CategoryClient categoryClient = new CategoryClientImpl();
-
+    CustomerClient customerClient = new CustomerClientImpl();
     Product product1 = new Product("Bananer", 100);
     Product product2 = new Product("Æbler", 100);
     Product product3 = new Product("Citroner", 100);
@@ -159,6 +161,11 @@ public class UIController implements Initializable {
                 obsTableList.removeIf(p -> !Integer.toString(p.getId()).contains(searchForProduct.getText().toLowerCase().trim()));
             }
         });
+
+        createCustomerButton.setOnAction(event -> customerClient.post(
+                new User(createCustomerFirstName.getText(), createCustomerLastName.getText(), createCustomerAddress1.getText(),
+                        createCustomerAddress1createCustomerAddress2.getText(),
+                        new Customer("61868607", "idk@gmail.com", "hallo"))));
 
         choosePrduct.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) ->
         {//reset table and textfield when new choice is selected
