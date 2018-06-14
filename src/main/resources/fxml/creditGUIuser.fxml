@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="772.0" prefWidth="1031.0" stylesheets="@../CSS/UILayoutScheme.css" xmlns="http://javafx.com/javafx/8.0.161" xmlns:fx="http://javafx.com/fxml/1" fx:controller="creditguiadmin.UIController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="772.0" prefWidth="1031.0" stylesheets="@../CSS/UILayoutScheme.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="creditguiadmin.UIController">
     <children>
         <TabPane layoutY="57.0" prefHeight="715.0" prefWidth="1031.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
@@ -22,17 +22,12 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <TextField layoutX="657.0" layoutY="12.0" prefHeight="58.0" prefWidth="360.0" promptText="Kunde Nr." AnchorPane.topAnchor="5.0">
+                                <TextField fx:id="orderCustomerTextfield" layoutX="657.0" layoutY="12.0" prefHeight="58.0" prefWidth="352.0" promptText="Kunde ID" AnchorPane.topAnchor="5.0">
                                     <font>
                                         <Font size="28.0" />
                                     </font>
                                 </TextField>
-                                <TextField layoutX="657.0" layoutY="70.0" prefHeight="58.0" prefWidth="360.0" promptText="Kunde Navn">
-                                    <font>
-                                        <Font size="28.0" />
-                                    </font>
-                                </TextField>
-                                <TableView fx:id="productTable" layoutX="657.0" layoutY="156.0" prefHeight="423.0" prefWidth="352.0">
+                                <TableView fx:id="productTable" layoutX="657.0" layoutY="74.0" prefHeight="505.0" prefWidth="352.0">
                                     <columns>
                                         <TableColumn fx:id="productColumn" prefWidth="351.0" text="Produkt" />
                                     </columns>
@@ -62,6 +57,7 @@
                                 </ScrollPane>
                                 <ChoiceBox fx:id="choosePrduct" layoutX="231.0" layoutY="260.0" prefHeight="38.0" prefWidth="178.0" AnchorPane.topAnchor="260.0" />
                                 <Button fx:id="cancleList" layoutX="657.0" layoutY="588.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="117.0" text="Afbryd" />
+                                <Button fx:id="refreshProductsButton" layoutX="427.0" layoutY="260.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="210.0" text="Opdater" />
                             </children>
                         </AnchorPane>
                     </content>
@@ -70,13 +66,13 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <TextField fx:id="createCustomerFirstName" layoutX="21.0" layoutY="24.0" prefHeight="51.0" prefWidth="304.0" promptText="BRUGERNAVN" AnchorPane.topAnchor="25.0" />
-                                <TextField fx:id="createCustomerLastName" layoutX="21.0" layoutY="101.0" prefHeight="51.0" prefWidth="304.0" promptText="PASSWORD" />
-                                <TextField fx:id="createCustomerAddress1" layoutX="21.0" layoutY="177.0" prefHeight="51.0" prefWidth="304.0" promptText="FORNAVN" />
-                                <TextField fx:id="createCustomerAddress1createCustomerAddress2" layoutX="21.0" layoutY="250.0" prefHeight="51.0" prefWidth="304.0" promptText="EFTERNAVN" />
-                                <TextField fx:id="createCustomerCity" layoutX="21.0" layoutY="323.0" prefHeight="51.0" prefWidth="304.0" promptText="TELEFON NUMMER" />
-                                <TextField fx:id="createCustomerZipCode" layoutX="21.0" layoutY="399.0" prefHeight="51.0" prefWidth="304.0" promptText="EMAIL" />
-                                <TextField fx:id="createCustomerPhoneNumber" layoutX="21.0" layoutY="472.0" prefHeight="51.0" prefWidth="304.0" promptText="ADRESSE" AnchorPane.leftAnchor="21.0" />
+                                <TextField fx:id="createCustomerUsername" layoutX="21.0" layoutY="24.0" prefHeight="51.0" prefWidth="304.0" promptText="BRUGERNAVN" AnchorPane.topAnchor="25.0" />
+                                <TextField fx:id="createCustomerPassword" layoutX="21.0" layoutY="101.0" prefHeight="51.0" prefWidth="304.0" promptText="PASSWORD" />
+                                <TextField fx:id="createCustomerFirstname" layoutX="21.0" layoutY="177.0" prefHeight="51.0" prefWidth="304.0" promptText="FORNAVN" />
+                                <TextField fx:id="createCustomerLastname" layoutX="21.0" layoutY="250.0" prefHeight="51.0" prefWidth="304.0" promptText="EFTERNAVN" />
+                                <TextField fx:id="createCustomerPhonenumber" layoutX="21.0" layoutY="323.0" prefHeight="51.0" prefWidth="304.0" promptText="TELEFON NUMMER" />
+                                <TextField fx:id="createCustomerEmail" layoutX="21.0" layoutY="399.0" prefHeight="51.0" prefWidth="304.0" promptText="EMAIL" />
+                                <TextField fx:id="createCustomerAdress" layoutX="21.0" layoutY="472.0" prefHeight="51.0" prefWidth="304.0" promptText="ADRESSE" AnchorPane.leftAnchor="21.0" />
                                 <Button fx:id="createCustomerButton" layoutX="21.0" layoutY="549.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="304.0" text="OPRET NY KUNDE" AnchorPane.bottomAnchor="51.0" AnchorPane.leftAnchor="21.0" />
                             </children>
                         </AnchorPane>
@@ -86,9 +82,9 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <TextField layoutX="23.0" layoutY="40.0" prefHeight="45.0" prefWidth="290.0" promptText="BRUGER ID" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0" />
-                                <Button layoutX="25.0" layoutY="163.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="290.0" text="BETAL OG OVERFØR" AnchorPane.leftAnchor="25.0" />
-                                <TextField layoutX="25.0" layoutY="90.0" prefHeight="51.0" prefWidth="290.0" promptText="BELØB TIL INDBETALING" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="90.0" />
+                                <TextField fx:id="customerFundsAddTextfield" layoutX="23.0" layoutY="40.0" prefHeight="45.0" prefWidth="255.0" promptText="BRUGER ID" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="25.0" />
+                                <Button fx:id="customerFundsAddAmountButton" layoutX="25.0" layoutY="145.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="255.0" text="BETAL OG OVERFØR" AnchorPane.leftAnchor="25.0" />
+                                <TextField fx:id="customerFundsAmountTextfield" layoutX="25.0" layoutY="85.0" prefHeight="45.0" prefWidth="255.0" promptText="BELØB TIL INDBETALING" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="85.0" />
                                 <TableView fx:id="customerListTable" layoutX="373.0" layoutY="90.0" prefHeight="461.0" prefWidth="608.0" AnchorPane.leftAnchor="374.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="90.0">
                                     <columns>
                                         <TableColumn fx:id="customerListTableUserID" prefWidth="89.283203125" text="Bruger ID" />
@@ -100,6 +96,7 @@
                                 </TableView>
                                 <TextField fx:id="searchCustomer" layoutX="373.0" layoutY="26.0" prefHeight="45.0" prefWidth="342.0" promptText="Søg Kunde" AnchorPane.leftAnchor="374.0" AnchorPane.topAnchor="25.0" />
                                 <ChoiceBox fx:id="chooseSearchCustomer" layoutX="709.0" layoutY="25.0" prefHeight="45.0" prefWidth="252.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="25.0" />
+                                <Button fx:id="refreachCustomerTableButton" layoutX="728.0" layoutY="582.0" maxWidth="255.0" minHeight="45.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="255.0" text="Opdater" />
                             </children></AnchorPane>
                     </content>
                 </Tab>

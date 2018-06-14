@@ -101,8 +101,9 @@ public class UIController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         refreshView();
-        refreshViewProduct();
+//        refreshViewProduct();
         for (Category cat : categories) {
             for (Product p : cat.getProducts()) {
                 allProducts.add(p);
@@ -197,9 +198,12 @@ public class UIController implements Initializable {
         payForChosenProducts.setOnAction
                 (event -> orderClient.addOrder
                         (new OrderRequest(Integer.parseInt
-                                (orderCustomerTextfield.getText()), 1, productList)
+                                (orderCustomerTextfield.getText()), 4, productList)
                         )
                 );
+
+        deleteProductButton.setOnAction
+                (event -> productClient.delete(Integer.parseInt(deleteProductTextfield.getText())));
 
         createProductButton.setOnAction
                 (event -> {
@@ -213,7 +217,7 @@ public class UIController implements Initializable {
                                                     (creatNewProductPrice.getText()));
                                     c.addProduct(p);
                                     created = true;
-                                    productClient.post(p);
+                                    productClient.postProduct(p, 1);
                                 }
                             }
                             if (!created){
