@@ -78,22 +78,25 @@ public class UIController implements Initializable {
     public TextField createUserFirstname;
 
     private CategoryClient categoryClient = new CategoryClientImpl();
-    private List<Category> categories = categoryClient.getAll();
-    private ObservableList<Product> obsTableList = FXCollections.observableArrayList(productList);
-    private List<Product> allProducts = new ArrayList<>();
+    private List<Category> categories = categoryClient.getAll(); //Creates a list of all categories
+    private ObservableList<Product> obsTableList = FXCollections.observableArrayList(productList); //Creates an observable list of products from the productList
+    private List<Product> allProducts = new ArrayList<>(); //Creates an ArrayList of products called "allProducts"
 
     private CustomerClient customerClient = new CustomerClientImpl();
     private OrderClient orderClient = new OrderClientImpl();
-    private List<User> users = new ArrayList<>();
+    private List<User> users = new ArrayList<>(); //Creates an ArrayList of Users called "users"
 
-    private ObservableList<User> obsUserTableList = FXCollections.observableArrayList(users);
+    private ObservableList<User> obsUserTableList = FXCollections.observableArrayList(users); //Creates an observable list of users
     private EmployeeClient employeeClient = new EmployeeClientImpl();
     private ProductClient productClient = new ProductClientImpl();
 
+    //Method that sets all users on the table view of users
     private void refreshView(){
         List<User> all = customerClient.getAll();
         obsUserTableList.setAll(all);
     }
+
+    //Method that sets all products on the table view of products
     private void refreshViewProduct(){
         List<Product> all = productClient.getAll();
         obsTableList.setAll(all);
@@ -101,8 +104,11 @@ public class UIController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        refreshView();
-        refreshViewProduct();
+        refreshView(); //Sets all users on table view of users
+        refreshViewProduct(); //Sets all products on table view of products
+
+        //Loop that runs through all categories and all products in the categories
+        //The loop adds all products to the list of products and adds it to an observable list
         for (Category cat : categories) {
             for (Product p : cat.getProducts()) {
                 allProducts.add(p);
@@ -110,21 +116,25 @@ public class UIController implements Initializable {
             }
         }
 
+        //Makes the table view not editable
         productListTable.setEditable(false);
 
-    productListTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        //Creates a mouse click event on the table view of products
+        productListTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
         @Override
         public void handle(MouseEvent event) {
 
-            Node node = event.getPickResult().getIntersectedNode();
+            Node node = event.getPickResult().getIntersectedNode(); //Looks at the node that was clicked on in the table view
             Product product;
+            /*Try catch block that catches any exceptions that the try block might throw
+            and then gets the parent of the clicked node and returns the item on the clicked row */
             try{
                 product = (Product) ((TableCell) node).getTableRow().getItem();
             }catch (Exception e){
                 product = (Product) ((TableCell)node.getParent()).getTableRow().getItem();
            }
-
+            //Checks if the chosen product from the list isn't null and adds it to the product list
            if(product != null)addToProductList(product);
 
         }
@@ -134,7 +144,8 @@ public class UIController implements Initializable {
         FilteredList<Product> flProducts = new FilteredList(obsTableList, p -> true);
 
         productListTable.getColumns();
-        productListTable.setItems(obsTableList);
+        productListTable.setItems(obsTableList); //Takes the products from the observable list and sets them on the table view of products
+        //Determines which column the variables from product should be set on
         productIdInPrductTable.setCellValueFactory(
                 new PropertyValueFactory<Product, Integer>("id"));
 
@@ -168,6 +179,8 @@ public class UIController implements Initializable {
             }
         });
 
+        /* When the "Create User" button is clicked it adds a user to the list of users
+        and sets admin rights to true or false */
         createUserButton.setOnAction(event -> {
             if (adminRights.isSelected()){
                 employeeClient.post(
@@ -179,6 +192,7 @@ public class UIController implements Initializable {
             }
         );
 
+        // When the "Create Customer" button is clicked it adds customer to the list of customers
         createCustomerButton.setOnAction(event -> customerClient.post(
                 new User(createCustomerUsername.getText(), createCustomerPassword.getText(), createCustomerFirstname.getText(),
                         createCustomerLastname.getText(),
@@ -188,12 +202,14 @@ public class UIController implements Initializable {
                 )
         ));
 
+        // Deletes customer from the list of customers
         deleteCustomerButton.setOnAction
                 (event -> customerClient.delete
                         (Integer.parseInt(deleteCustomerID.getText()
                         ))
                 );
 
+        // Creates an order of the chosen products from the order table view
         payForChosenProducts.setOnAction
                 (event -> orderClient.addOrder
                         (new OrderRequest(Integer.parseInt
@@ -201,12 +217,15 @@ public class UIController implements Initializable {
                         )
                 );
 
+        // Creates a product
         createProductButton.setOnAction
                 (event -> {
-                            String categoryID = createProduktCategoryName.getText();
+                            String categoryID = createProduktCategoryName.getText(); //Gets the written category ID from the text field
                             boolean created = false;
                             for (Category c : categories) {
                                 if (c.getId() == Integer.parseInt(categoryID)) {
+                                    /* If the ID number from the text field matches an ID from a category then it creates
+                                    * a new product from the information in the text fields */
                                     Product p = new Product(
                                             creatNewProductName.getText(),
                                             Double.parseDouble
@@ -222,6 +241,7 @@ public class UIController implements Initializable {
                         }
                 );
 
+        //Adds a listener to the choice box
         choosePrduct.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) ->
         {//reset table and textfield when new choice is selected
             if (newVal != null)
@@ -234,6 +254,7 @@ public class UIController implements Initializable {
         //Creates filtered list with customer
         FilteredList<User> flCustomer = new FilteredList(obsUserTableList, p -> true);
 
+        //Determines which column the variables from user should be set on
         customerListTable.getColumns();
         customerListTable.setItems(obsUserTableList);
         customerListTableUserID.setCellValueFactory(
@@ -241,6 +262,7 @@ public class UIController implements Initializable {
 
         customerListTablePhone.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
+                    //Gets the customer phone number from User and sets it on the table column
                     @Override
                     public ObservableValue call(TableColumn.CellDataFeatures param) {
                         User user = (User) param.getValue();
@@ -257,6 +279,7 @@ public class UIController implements Initializable {
 
         customerListTableAddress.setCellValueFactory(
                 new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
+                    //Gets the customer address from User and sets it on the table column
                     @Override
                     public ObservableValue call(TableColumn.CellDataFeatures param) {
                         User user = (User) param.getValue();
@@ -291,12 +314,13 @@ public class UIController implements Initializable {
             if (newVal != null)
             {
                 searchCustomer.setText("");
-                flCustomer.setPredicate(null);//This is same as saying flProduct.setPredicate(p->true);
+                flCustomer.setPredicate(null);//This is same as saying flCustomer.setPredicate(p->true);
             }
         });
 
     }
 
+    //Method that sets categories on the grid pane as buttons
     public void selectCategories() {
 
         GridPane grid = new GridPane();
@@ -314,6 +338,7 @@ public class UIController implements Initializable {
             categoryButton.setStyle("-fx-font: 22 arial; -fx-base: #b6e7c9;");
             categoryButton.setMaxSize(300,80);
             categoryButton.setMinSize(300,80);
+            //Makes sure that only 2 buttons can be added per row
             if (counter == 2) {
                 rowCounter++;
                 grid.add(categoryButton, rowCounter, 2);
@@ -323,13 +348,9 @@ public class UIController implements Initializable {
         }
     }
 
+    //Method that sets products on categories as buttons and adds a return button
     private void choosenCategory(Category category) {
-        try {
-            List<Category> newcategories = categoryClient.getAll();
-        }
-        catch (Exception e) {
-            System.out.println(e);
-        }
+
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(BUTTON_PADDING));
         grid.setHgap(BUTTON_PADDING);
@@ -365,7 +386,7 @@ public class UIController implements Initializable {
 
 
             productButton.setOnAction(event -> addToProductList(product));
-
+            //Makes sure that only 2 buttons can be added per row
             if (counter == 2) {
                 rowCounter++;
                 grid.add(productButton, rowCounter, 2);
@@ -375,6 +396,7 @@ public class UIController implements Initializable {
         }
     }
 
+    //Method that adds products from the product list to the observable list and then sets it on the order table view
     private void addToProductList(Product product) {
 
         productList.add(product);
@@ -385,12 +407,14 @@ public class UIController implements Initializable {
 
         productTable.setItems(obsProductList);
 
+        //Button that removes the products from the order table view
         cancleList.setOnAction(event -> {
             obsProductList.clear();
             productList.clear();
         });
     }
 
+    //Method that initializes the list by adding the products from the observable list to the table view
     public void itemToList(MouseEvent mouseEvent) {
 
         ObservableList<Product> obsProductList = FXCollections.observableArrayList(productList);
@@ -398,6 +422,5 @@ public class UIController implements Initializable {
         productColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
 
         productTable.setItems(obsProductList);
-
     }
 }
