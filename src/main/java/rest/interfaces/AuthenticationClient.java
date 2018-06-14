@@ -10,5 +10,5 @@ import javax.ws.rs.NotAuthorizedException;
  */
 public interface AuthenticationClient {
     String login (LoginDetails loginDetails) throws NotAuthorizedException;
-    Role getRole (String jwt) throws NotAuthorizedException;
+    Role getRole () throws NotAuthorizedException;
 }
