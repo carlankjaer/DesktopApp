@@ -1,4 +1,4 @@
-package creditguiadmin;
+package creditguiuser;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -21,10 +21,11 @@ import rest.implementations.*;
 import rest.interfaces.*;
 
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
-public class UIController implements Initializable {
-
+public class UIControllerUser implements Initializable {
     private static final double BUTTON_PADDING = 10;
     public ScrollPane scrollPane;
     public Button categoriesButton;
@@ -121,23 +122,23 @@ public class UIController implements Initializable {
         //Creates a mouse click event on the table view of products
         productListTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
-        @Override
-        public void handle(MouseEvent event) {
+            @Override
+            public void handle(MouseEvent event) {
 
-            Node node = event.getPickResult().getIntersectedNode(); //Looks at the node that was clicked on in the table view
-            Product product;
+                Node node = event.getPickResult().getIntersectedNode(); //Looks at the node that was clicked on in the table view
+                Product product;
             /*Try catch block that catches any exceptions that the try block might throw
             and then gets the parent of the clicked node and returns the item on the clicked row */
-            try{
-                product = (Product) ((TableCell) node).getTableRow().getItem();
-            }catch (Exception e){
-                product = (Product) ((TableCell)node.getParent()).getTableRow().getItem();
-           }
-            //Checks if the chosen product from the list isn't null and adds it to the product list
-           if(product != null)addToProductList(product);
+                try{
+                    product = (Product) ((TableCell) node).getTableRow().getItem();
+                }catch (Exception e){
+                    product = (Product) ((TableCell)node.getParent()).getTableRow().getItem();
+                }
+                //Checks if the chosen product from the list isn't null and adds it to the product list
+                if(product != null)addToProductList(product);
 
-        }
-    });
+            }
+        });
 
         //Creates filtered list with products
         FilteredList<Product> flProducts = new FilteredList(obsTableList, p -> true);
@@ -178,18 +179,6 @@ public class UIController implements Initializable {
             }
         });
 
-        /* When the "Create User" button is clicked it adds a user to the list of users
-        and sets admin rights to true or false */
-        createUserButton.setOnAction(event -> {
-            if (adminRights.isSelected()){
-                employeeClient.post(
-                        new User(createUserID.getText(), createUserPassword.getText(),createUserFirstname.getText(),createUserLastname.getText(),true));
-                }else{
-                employeeClient.post(
-                        new User(createUserID.getText(), createUserPassword.getText(),createUserFirstname.getText(),createUserLastname.getText(),false));
-                }
-            }
-        );
 
         // When the "Create Customer" button is clicked it adds customer to the list of customers
         createCustomerButton.setOnAction(event -> customerClient.post(
@@ -201,12 +190,6 @@ public class UIController implements Initializable {
                 )
         ));
 
-        // Deletes customer from the list of customers
-        deleteCustomerButton.setOnAction
-                (event -> customerClient.delete
-                        (Integer.parseInt(deleteCustomerID.getText()
-                        ))
-                );
 
         // Creates an order of the chosen products from the order table view
         payForChosenProducts.setOnAction
@@ -216,29 +199,6 @@ public class UIController implements Initializable {
                         )
                 );
 
-        // Creates a product
-        createProductButton.setOnAction
-                (event -> {
-                            String categoryID = createProduktCategoryName.getText(); //Gets the written category ID from the text field
-                            boolean created = false;
-                            for (Category c : categories) {
-                                if (c.getId() == Integer.parseInt(categoryID)) {
-                                    /* If the ID number from the text field matches an ID from a category then it creates
-                                    * a new product from the information in the text fields */
-                                    Product p = new Product(
-                                            creatNewProductName.getText(),
-                                            Double.parseDouble
-                                                    (creatNewProductPrice.getText()));
-                                    c.addProduct(p);
-                                    created = true;
-                                    productClient.postProduct(p, Integer.parseInt(categoryID));
-                                }
-                            }
-                            if (!created){
-                                System.out.println("Category does not exist!");
-                            }
-                        }
-                );
 
         //Adds a listener to the choice box
         choosePrduct.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) ->
