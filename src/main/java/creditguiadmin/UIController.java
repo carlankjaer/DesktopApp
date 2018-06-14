@@ -49,7 +49,6 @@ public class UIController implements Initializable {
     public TextField refundCustomerName;
     public TextField currentRefundableBalance;
     public Button refundLatestProduct;
-    public TextField deleteCustomerName;
     public TableColumn productIdInPrductTable;
     public TableColumn productCategoryInTable;
     public TableColumn productNameInTable;
