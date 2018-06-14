@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="772.0" prefWidth="1031.0" stylesheets="@../CSS/UILayoutScheme.css" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="creditguiadmin.UIController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="772.0" prefWidth="1031.0" stylesheets="@../CSS/UILayoutScheme.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="creditguiadmin.UIController">
     <children>
         <TabPane layoutY="57.0" prefHeight="715.0" prefWidth="1031.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
@@ -134,7 +134,7 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
                                 <TextField fx:id="createUserID" layoutX="15.0" layoutY="65.0" prefHeight="45.0" prefWidth="255.0" promptText="BRUGER ID" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="61.0" />
-                                <TextField fx:id="createUserPhoneNumber" layoutX="15.0" layoutY="123.0" prefHeight="45.0" prefWidth="255.0" promptText="TELEFON NR." AnchorPane.leftAnchor="15.0" />
+                                <TextField fx:id="createUserPhoneNumber" layoutX="15.0" layoutY="123.0" prefHeight="45.0" prefWidth="255.0" promptText="TELEFON NR." AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="121.0" />
                                 <TextField fx:id="createUserName" layoutX="15.0" layoutY="182.0" prefHeight="45.0" prefWidth="255.0" promptText="BRUGERNAVN" AnchorPane.leftAnchor="15.0" />
                                 <CheckBox fx:id="adminRights" layoutX="15.0" layoutY="229.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="260.0" text="ADMIN RETTIGHEDER" AnchorPane.leftAnchor="15.0" />
                                 <Button fx:id="createUserButton" layoutX="6.0" layoutY="277.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="255.0" text="Opret Ansat" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="271.0" />
@@ -143,8 +143,7 @@
                                 <TextField fx:id="currentRefundableBalance" layoutX="14.0" layoutY="514.0" prefHeight="45.0" prefWidth="254.0" promptText="BELØB PÅ KONTO" AnchorPane.leftAnchor="15.0" />
                                 <Button fx:id="refundLatestProduct" layoutX="15.0" layoutY="569.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="254.0" text="Refunder Beløb" AnchorPane.leftAnchor="15.0" />
                                 <TextField fx:id="deleteCustomerID" layoutX="484.0" layoutY="61.0" prefHeight="45.0" prefWidth="255.0" promptText="KUNDE / BRUGER ID" AnchorPane.leftAnchor="484.0" AnchorPane.topAnchor="61.0" />
-                                <TextField fx:id="deleteCustomerPhonenumber" layoutX="483.0" layoutY="123.0" prefHeight="45.0" prefWidth="255.0" promptText="KUNDE / BRUGER TELEFON NUMMER" AnchorPane.leftAnchor="484.0" />
-                                <Button fx:id="deleteCustomerButton" layoutX="484.0" layoutY="180.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="255.0" text="Slet" AnchorPane.leftAnchor="484.0" AnchorPane.topAnchor="180.0" />
+                                <Button fx:id="deleteCustomerButton" layoutX="484.0" layoutY="117.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="255.0" text="Slet" AnchorPane.leftAnchor="484.0" AnchorPane.topAnchor="121.0" />
                                 <Label layoutX="14.0" layoutY="26.0" prefHeight="36.0" prefWidth="394.0" text="OPRET NY ANSAT" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="25.0" />
                                 <Label layoutX="14.0" layoutY="359.0" prefHeight="25.0" prefWidth="264.0" text="REFUNDER KUNDER" AnchorPane.leftAnchor="15.0" />
                                 <Label layoutX="483.0" layoutY="30.0" prefHeight="25.0" prefWidth="331.0" text="SLET KUNDER ELLER BRUGER" AnchorPane.leftAnchor="484.0" AnchorPane.topAnchor="25.0" />
