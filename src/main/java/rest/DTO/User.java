@@ -45,6 +45,20 @@ public class User {
         this.role = Role.EMPLOYEE;
     }
 
+    public User(String username, String password, String firstname, String lastname, boolean admin) {
+        this.id = counter;
+        counter++;
+        this.username = username;
+        this.password = password;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.date = new Date();
+        if (admin == true)
+            this.role = Role.ADMIN;
+        else
+            this.role = Role.EMPLOYEE;
+    }
+
     public int getId() {
         return id;
     }

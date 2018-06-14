@@ -19,14 +19,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.util.Callback;
 import rest.DTO.*;
-import rest.implementations.CategoryClientImpl;
-import rest.implementations.CustomerClientImpl;
-import rest.implementations.OrderClientImpl;
-import rest.implementations.ProductClientImpl;
-import rest.interfaces.CategoryClient;
-import rest.interfaces.CustomerClient;
-import rest.interfaces.OrderClient;
-import rest.interfaces.ProductClient;
+import rest.implementations.*;
+import rest.interfaces.*;
 
 import java.net.URL;
 import java.net.UnknownServiceException;
@@ -43,8 +37,6 @@ public class UIController implements Initializable {
     public Button payForChosenProducts;
     public Button createCustomerButton;
     public TextField createUserID;
-    public TextField createUserPhoneNumber;
-    public TextField createUserName;
     public CheckBox adminRights;
     public Button createUserButton;
     public TableColumn productIdInPrductTable;
@@ -77,17 +69,16 @@ public class UIController implements Initializable {
     public TextField customerFundsAddTextfield;
     public Button customerFundsAddAmountButton;
     public TextField customerFundsAmountTextfield;
-    public TextField updateProductId;
     public TextField creatNewProductName;
     public TextField deleteProductTextfield;
     public TextField creatNewProductPrice;
     public TextField createProduktCategoryName;
-    public Button updateProductButton;
     public Button deleteProductButton;
     public Button createProductButton;
-    public TextField updateSetNewProductName;
-    public TextField updateSetNewProductPrice;
     public Button refreshProductsButton;
+    public TextField createUserPassword;
+    public TextField createUserLastname;
+    public TextField createUserFirstname;
 
     private CategoryClient categoryClient = new CategoryClientImpl();
     List<Category> categories = categoryClient.getAll();
@@ -99,7 +90,7 @@ public class UIController implements Initializable {
     List<User> users = new ArrayList<>();
 
     ObservableList<User> obsUserTableList = FXCollections.observableArrayList(users);
-
+    private EmployeeClient employeeClient = new EmployeeClientImpl();
     private ProductClient productClient = new ProductClientImpl();
 
     private void refreshView(){
@@ -180,6 +171,17 @@ public class UIController implements Initializable {
             }
         });
 
+        createUserButton.setOnAction(event -> {
+            if (adminRights.isSelected()){
+                employeeClient.post(
+                        new User(createUserID.getText(), createUserPassword.getText(),createUserFirstname.getText(),createUserLastname.getText(),true));
+                }else{
+                employeeClient.post(
+                        new User(createUserID.getText(), createUserPassword.getText(),createUserFirstname.getText(),createUserLastname.getText(),false));
+                }
+            }
+        );
+
         createCustomerButton.setOnAction(event -> customerClient.post(
                 new User(createCustomerUsername.getText(), createCustomerPassword.getText(), createCustomerFirstname.getText(),
                         createCustomerLastname.getText(),
@@ -222,6 +224,9 @@ public class UIController implements Initializable {
                             }
                         }
                 );
+
+        deleteCustomerButton.setOnAction
+                (event -> productClient.delete(Integer.parseInt(deleteProductTextfield.getText())));
 
 
         choosePrduct.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) ->
@@ -270,7 +275,7 @@ public class UIController implements Initializable {
         refreachCustomerTableButton.setOnAction(event -> refreshView());
 
         //Sets values on choice box and adds ID as standard search key
-        chooseSearchCustomer.getItems().addAll("ID", "Telefon nummer", "Fornavn", "Efternavn", "Addresse");
+        chooseSearchCustomer.getItems().addAll("ID", "Fornavn", "Efternavn");
         chooseSearchCustomer.setValue("ID");
 
         //Filters search after search key (ex. ID)
@@ -280,17 +285,11 @@ public class UIController implements Initializable {
             if (chooseSearchCustomer.getValue().equals("ID")) {
                 obsUserTableList.removeIf(p -> !Integer.toString(p.getId()).contains(searchCustomer.getText().toLowerCase().trim()));
             }
-            else if (chooseSearchCustomer.getValue().equals("Telefon nummer")) {
-                //obsUserTableList.removeIf(p -> !p.getFirstname().toLowerCase().contains(searchCustomer.getText().toLowerCase().trim()));
-            }
             else if (chooseSearchCustomer.getValue().equals("Fornavn")) {
                 obsUserTableList.removeIf(p -> !p.getFirstname().toLowerCase().contains(searchCustomer.getText().toLowerCase().trim()));
             }
             else if (chooseSearchCustomer.getValue().equals("Efternavn")) {
                 obsUserTableList.removeIf(p -> !p.getLastname().toLowerCase().contains(searchCustomer.getText().toLowerCase().trim()));
-            }
-            else if (chooseSearchCustomer.getValue().equals("Adresse")) {
-                //obsUserTableList.removeIf(p -> !p.getCustomer().toLowerCase().contains(searchCustomer.getText().toLowerCase().trim()));
             }
         });
 
