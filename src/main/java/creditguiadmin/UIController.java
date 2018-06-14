@@ -1,5 +1,9 @@
 package creditguiadmin;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableStringValue;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -13,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
+import javafx.util.Callback;
 import rest.DTO.*;
 import rest.implementations.CategoryClientImpl;
 import rest.implementations.CustomerClientImpl;
@@ -188,7 +193,14 @@ public class UIController implements Initializable {
                 new PropertyValueFactory<User, Integer>("id"));
 
         customerListTablePhone.setCellValueFactory(
-                new PropertyValueFactory<User, String>("phonenumber"));
+                new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
+                    @Override
+                    public ObservableValue call(TableColumn.CellDataFeatures param) {
+                        User user = (User) param.getValue();
+                        return new SimpleStringProperty(user.getCustomer().getPhonenumber());
+                    }
+                }
+        );
 
         customerListTableFirstname.setCellValueFactory(
                 new PropertyValueFactory<User, String>("firstname"));
@@ -197,7 +209,14 @@ public class UIController implements Initializable {
                 new PropertyValueFactory<User, String>("lastname"));
 
         customerListTableAddress.setCellValueFactory(
-                new PropertyValueFactory<User, String>("address"));
+                new Callback<TableColumn.CellDataFeatures, ObservableValue>() {
+                    @Override
+                    public ObservableValue call(TableColumn.CellDataFeatures param) {
+                        User user = (User) param.getValue();
+                        return new SimpleStringProperty(user.getCustomer().getAddress());
+                    }
+                }
+        );
 
         //Sets values on choice box and adds ID as standard search key
         chooseSearchCustomer.getItems().addAll("ID", "Telefon nummer", "Fornavn", "Efternavn", "Addresse");
