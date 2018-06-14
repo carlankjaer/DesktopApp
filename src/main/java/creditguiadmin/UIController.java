@@ -74,6 +74,9 @@ public class UIController implements Initializable {
     public TextField createCustomerPhonenumber;
     public TextField createCustomerAdress;
     public TextField createCustomerEmail;
+    public Button createProduct;
+    public Button deleteProduct;
+    public Button changeProduct;
 
     private CategoryClient categoryClient = new CategoryClientImpl();
     List<Category> categories = categoryClient.getAll();
