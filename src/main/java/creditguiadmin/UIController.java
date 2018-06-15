@@ -104,6 +104,7 @@ public class UIController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         refreshView(); //Sets all users on table view of users
 
         //Loop that runs through all categories and all products in the categories
@@ -223,7 +224,7 @@ public class UIController implements Initializable {
                             Double.parseDouble(creatNewProductPrice.getText()));
                     productClient.postProduct( p ,Integer.parseInt(createProduktCategoryName.getText()));
                 });
-        
+
         deleteProductButton.setOnAction
                 (event -> productClient.delete(Integer.parseInt(deleteProductTextfield.getText())));
         //Adds a listener to the choice box
@@ -316,6 +317,7 @@ public class UIController implements Initializable {
         scrollPane.setContent(grid);
         int counter = 0;
         int rowCounter = 0;
+        int columCOunter = 0;
         for (Category category : categories) {
             counter++;
             Button categoryButton = new Button(category.getName());
@@ -324,12 +326,13 @@ public class UIController implements Initializable {
             categoryButton.setMaxSize(300,80);
             categoryButton.setMinSize(300,80);
             //Makes sure that only 2 buttons can be added per row
-            if (counter == 2) {
+            if (rowCounter == 1) {
                 rowCounter++;
-                grid.add(categoryButton, rowCounter, 2);
+                grid.add(categoryButton, columCOunter , rowCounter);
             }
             else
-                grid.add(categoryButton, rowCounter, 2);
+                columCOunter++;
+                grid.add(categoryButton, columCOunter, 2);
         }
     }
 
@@ -349,6 +352,7 @@ public class UIController implements Initializable {
 
         int counter = 0;
         int rowCounter = 0;
+        int columCOunter = 0;
         for (Product product : category.getProducts()) {
             counter++;
 
@@ -374,10 +378,10 @@ public class UIController implements Initializable {
             //Makes sure that only 2 buttons can be added per row
             if (counter == 2) {
                 rowCounter++;
-                grid.add(productButton, rowCounter, 2);
+                grid.add(productButton, columCOunter, rowCounter);
             }
             else
-                grid.add(productButton, rowCounter, 2);
+                grid.add(productButton, columCOunter, 2);
         }
     }
 
