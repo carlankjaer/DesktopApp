@@ -11,6 +11,6 @@ import java.util.List;
  */
 public class EmployeeClientImpl extends DefaultClientImpl<User> implements EmployeeClient {
     public EmployeeClientImpl() {
-        super("employee", User.class, new GenericType<List<User>>() {});
+        super("Employee", User.class, new GenericType<List<User>>() {});
     }
 }

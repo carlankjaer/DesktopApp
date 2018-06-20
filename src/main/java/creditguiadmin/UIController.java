@@ -213,7 +213,7 @@ public class UIController implements Initializable {
         payForChosenProducts.setOnAction
                 (event -> orderClient.addOrder
                         (new OrderRequest(Integer.parseInt
-                                (orderCustomerTextfield.getText()), 1, productList)
+                                (orderCustomerTextfield.getText()), 3, productList)
                         )
                 );
 
